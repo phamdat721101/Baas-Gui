@@ -1,0 +1,24 @@
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "ANY"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+rule R1a_TraderSeeUpdateThemselvesOnly {
+  description: "Trader can see and update their own record only"
+  participant(t): "org.namespace.pqd.Trader"
+  operation: READ, UPDATE
+  resource(v): "org.namespace.pqd.Trader"
+  condition: (v.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R1b_TraderSeeTheirCommodities {
+  description: "Trader can see/work with their own Commodities"
+  participant(t): "org.namespace.pqd.Trader"
+  operation: ALL
+  resource(c): "org.namespace.pqd.Commodity"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}

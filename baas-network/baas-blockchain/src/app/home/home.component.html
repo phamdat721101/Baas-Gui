@@ -1,0 +1,25 @@
+<nav class="navbar navbar-inverse" *ngIf="auth.loggedIn">
+    <h1 *ngIf="auth.isCustomer">Customer</h1>
+    <h1 *ngIf="auth.isProvider">Provider</h1>
+    <h1 *ngIf="auth.isVendor">Vendor</h1>
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li class="dropdown active" *ngIf="auth.isCustomer || auth.isVendor">
+          <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['/Customer']">List Customer</a>
+        </li>
+        <li class="dropdown active">
+          <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['/Trade']">List Transaction</a>
+        </li>
+        <li class="dropdown active" *ngIf="auth.isCustomer">
+          <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['/CommodityCustomer']">List CommodityCustomer</a>
+        </li>
+        <li class="dropdown active" *ngIf="auth.isProvider">
+          <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['/CommodityProvider']">List CommodityProvider</a>
+      	</li>
+      	<li class="dropdown active" *ngIf="auth.isProvider || auth.isVendor">
+          <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['/Provider']">List Provider</a>
+        </li>
+      </ul>
+    </div>
+    <p style="padding-left: 90%"><a [routerLink]="['/Login']">Log out</a></p>
+</nav>

@@ -1,0 +1,58 @@
+rule Default {
+    description: "Allow Admin access to all resources"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.namespace.pqd.*"
+    action: ALLOW
+}
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "ANY"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+rule R1a_VendorSeeUpdateThemselvesOnly {
+  description: "Vendor can see and update their own record only"
+  participant(t): "org.namespace.pqd.Vendor"
+  operation: READ, UPDATE
+  resource(v): "org.namespace.pqd.Vendor"
+  condition: (v.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R1b_CustomerSeeTheirCommodities {
+  description: "Vendor can see/work with their own Commodities"
+  participant(t): "org.namespace.pqd.Customer"
+  operation: ALL
+  resource(c): "org.namespace.pqd.CommodityCustomer"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R1c_CustomerSeeUpdateThemselvesOnly {
+  description: "Vendor can see and update their own record only"
+  participant(t): "org.namespace.pqd.Customer"
+  operation: READ, UPDATE
+  resource(v): "org.namespace.pqd.Customer"
+  condition: (v.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R2a_ProviderSeeTheirCommodities {
+  description: "Vendor can see/work with their own Commodities"
+  participant(t): "org.namespace.pqd.Provider"
+  operation: ALL
+  resource(c): "org.namespace.pqd.CommodityProvider"
+  condition: (c.owner.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
+
+rule R2b_ProviderSeeUpdateThemselvesOnly {
+  description: "Vendor can see and update their own record only"
+  participant(t): "org.namespace.pqd.Provider"
+  operation: READ, UPDATE
+  resource(v): "org.namespace.pqd.Provider"
+  condition: (v.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}
