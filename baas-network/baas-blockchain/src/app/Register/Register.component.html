@@ -1,12 +1,78 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li class="dropdown active">
-          <a class="dropdown-toggle" [routerLink]="['/Provider']">Provider</a>
-        </li>
-        <li class="dropdown active">
-          <a class="dropdown-toggle" [routerLink]="['/Customer']">Customer</a>
-        </li>
-      </ul>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+      <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li style="padding-left: 80px" class="dropdown active">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProviderModal">Provider</button>
+            </li>
+            <li style="padding-left: 80px" class="dropdown active">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCustomerModal">Customer</button>
+            </li>
+          </ul>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addProviderModal" tabindex="-1" role="dialog" aria-labelledby="addParticipantModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addProviderModalLabel">Create Provider</h4>
+            <p class="modal-intro">Enter the required values below.</p>
+        </div>
+        <form [formGroup]="myFormProvider">
+          <div class="modal-body">
+                <div class="form-group text-left">
+                  <label for="proId">proId</label>
+                    <input formControlName="proId" type="text" class="form-control">
+                </div>
+                <div class="form-group text-left">
+                  <label for="username">username</label>
+                    <input formControlName="usernamePro" type="text" class="form-control">
+                </div>
+                <div class="form-group text-left">
+                  <label for="password">password</label>
+                    <input formControlName="passwordPro" type="password" class="form-control">
+                </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button (click)="addProvider(myFormProvider);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
+          </div>
+        </form>
+      </div>
     </div>
-</nav>
+</div>
+
+<div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addParticipantModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addCustomerModalLabel">Create Customer</h4>
+            <p class="modal-intro">Enter the required values below.</p>
+        </div>
+        <form [formGroup]="myFormCustomer">
+          <div class="modal-body">
+                <div class="form-group text-left">
+                  <label for="proId">cuId</label>
+                    <input formControlName="cuId" type="text" class="form-control">
+                </div>
+                <div class="form-group text-left">
+                  <label for="username">username</label>
+                    <input formControlName="username" type="text" class="form-control">
+                </div>
+                <div class="form-group text-left">
+                  <label for="password">password</label>
+                    <input formControlName="password" type="password" class="form-control">
+                </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button (click)="addCustomer(myFormCustomer);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

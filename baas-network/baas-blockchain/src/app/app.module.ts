@@ -19,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { DataService } from './data.service';
 import { AuthService } from './Service/auth.service';
+import { CustomerService } from './Customer/Customer.service';
+import { ProviderService } from './Provider/Provider.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
@@ -54,7 +56,9 @@ import { RegisterComponent } from './Register/Register.component';
   ],
   providers: [
     DataService,
-    AuthService
+    AuthService,
+    CustomerService,
+    ProviderService
   ],
   bootstrap: [AppComponent]
 })

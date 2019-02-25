@@ -15,6 +15,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtHelper } from 'angular2-jwt';
 import { LoginService } from './Login.service';
 import { AuthService } from '../Service/auth.service';
 import 'rxjs/add/operator/toPromise';
@@ -26,7 +27,7 @@ import 'rxjs/add/operator/toPromise';
   providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
-
+  jwtHelper: JwtHelper = new JwtHelper();
   myForm: FormGroup;
 
   private allParticipants;
@@ -49,11 +50,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     
   }
+  decodeUserFromToken(token:any) {
+    return this.jwtHelper.decodeToken(token);
+  }
   Login(): Promise<any>{
     if(this.role.value == 'Vendor'){
         return this.serviceLogin.getVendor(this.id.value).toPromise()
       .then((result) =>{
-        if(this.id.value == result.venId){
+        if(this.id.value == result.venId
+          && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Vendor');
           this.router.navigate(['/Home']);
@@ -74,7 +79,8 @@ export class LoginComponent implements OnInit {
     if(this.role.value == 'Customer'){
         return this.serviceLogin.getCustomer(this.id.value).toPromise()
       .then((result) =>{
-        if(this.id.value == result.cuId){
+        if(this.id.value == result.cuId
+          && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Customer');
           this.router.navigate(['/Home']);
@@ -95,7 +101,8 @@ export class LoginComponent implements OnInit {
     if(this.role.value == 'Provider'){
         return this.serviceLogin.getProvider(this.id.value).toPromise()
       .then((result) =>{
-        if(this.id.value == result.proId){
+        if(this.id.value == result.proId
+          && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Provider');
           this.router.navigate(['/Home']);
