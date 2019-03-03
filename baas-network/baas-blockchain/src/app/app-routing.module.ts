@@ -26,11 +26,13 @@ import { CustomerComponent } from './Customer/Customer.component';
 import { LoginComponent } from './Login/Login.component';
 import { TradeComponent } from './Trade/Trade.component';
 import { RegisterComponent } from './Register/Register.component';
+import { DashboardComponent } from './Dashboard/Dashboard.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'CommodityCustomer', component: CommodityCustomerComponent, canActivate:[AuthService] },
   { path: 'CommodityProvider', component: CommodityProviderComponent, canActivate:[AuthService] },
+  { path: 'Dashboard', component: DashboardComponent, canActivate:[AuthService]},
   { path: 'Vendor', component: VendorComponent, canActivate:[AuthService] },
   { path: 'Provider', component: ProviderComponent},
   { path: 'Customer', component: CustomerComponent},

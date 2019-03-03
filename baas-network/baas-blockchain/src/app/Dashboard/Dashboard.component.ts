@@ -16,11 +16,11 @@ import { Component } from '@angular/core';
 import { AuthService } from '../Service/auth.service';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
+  selector: 'app-dashboard',
+  templateUrl: './Dashboard.component.html',
   styleUrls: ['../css/datepicker3.css','../css/styles.css']
 })
-export class HomeComponent {
+export class DashboardComponent {
 
   constructor (
     public auth: AuthService,

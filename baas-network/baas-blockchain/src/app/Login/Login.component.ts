@@ -23,7 +23,7 @@ import 'rxjs/add/operator/toPromise';
 @Component({
   selector: 'app-login',
   templateUrl: './Login.component.html',
-  styleUrls: ['./Login.component.css'],
+  styleUrls: ['../css/styles.css','../css/datepicker3.css','./Login.component.css'],
   providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
           && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Vendor');
-          this.router.navigate(['/Home']);
+          this.router.navigate(['/Dashboard']);
         }
         else{
           alert('Fail to login');
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
           && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Customer');
-          this.router.navigate(['/Home']);
+          this.router.navigate(['/Dashboard']);
         }
         else{
           alert('Fail to login');
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
           && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Provider');
-          this.router.navigate(['/Home']);
+          this.router.navigate(['/Dashboard']);
         }
         else{
           alert('Fail to login');

@@ -20,7 +20,7 @@ import 'rxjs/add/operator/toPromise';
 @Component({
   selector: 'app-provider',
   templateUrl: './Provider.component.html',
-  styleUrls: ['./Provider.component.css'],
+  styleUrls: ['./Provider.component.css','../css/datepicker3.css','../css/styles.css'],
   providers: [ProviderService]
 })
 export class ProviderComponent implements OnInit {

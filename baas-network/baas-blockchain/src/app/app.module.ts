@@ -26,7 +26,7 @@ import { HomeComponent } from './home/home.component';
 
 import { CommodityCustomerComponent } from './CommodityCustomer/CommodityCustomer.component';
 import { CommodityProviderComponent } from './CommodityProvider/CommodityProvider.component';
-
+import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { VendorComponent } from './Vendor/Vendor.component';
 import { ProviderComponent } from './Provider/Provider.component';
 import { CustomerComponent } from './Customer/Customer.component';
@@ -38,6 +38,7 @@ import { RegisterComponent } from './Register/Register.component';
   declarations: [
     AppComponent,
     HomeComponent,
+    DashboardComponent,
     CommodityCustomerComponent,
     CommodityProviderComponent,
     VendorComponent,

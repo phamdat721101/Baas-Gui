@@ -1,4 +1,4 @@
-<div class="wrapper fadeInDown">
+<!-- <div class="wrapper fadeInDown">
   <div id="formContent">
     <form [formGroup]="myForm">  
       <input type="text" formControlName="id" class="fadeIn second" placeholder="username">
@@ -6,11 +6,38 @@
       <input type="text" formControlName="role" class="fadeIn third" placeholder="role">
       <button (click)="Login();" type="submit" class="btn btn-success" data-dismiss="modal">Login</button>
     </form>
-
-    <!-- Remind Passowrd -->
     <div id="formFooter">
       <a class="underlineHover" [routerLink]="['/Register']">Register</a>
     </div>
 
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+    <div class="login-panel panel panel-default">
+      <div class="panel-heading">Log in</div>
+      <div class="panel-body">
+        <form role="form" [formGroup]="myForm">
+          <fieldset>
+            <div class="form-group">
+              <input formControlName="id" class="form-control" placeholder="User Id" name="email" type="text" autofocus="">
+            </div>
+            <div class="form-group">
+              <input formControlName="password" class="form-control" placeholder="Password" name="password" type="password" value="">
+            </div>
+            <div class="form-group">
+              <input formControlName="role" class="form-control" placeholder="Role" name="email" type="text" autofocus="">
+            </div>
+            <div class="checkbox">
+              <label>
+                <a class="underlineHover" [routerLink]="['/Register']">Register</a>
+              </label>
+            </div>
+            <button (click)="Login();" type="submit" style="background-color: skyblue; margin-left: 38%" class="btn btn-success" data-dismiss="modal">Login</button>
+            </fieldset>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
