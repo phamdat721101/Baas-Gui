@@ -18,7 +18,10 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './Dashboard.component.html',
-  styleUrls: ['../css/datepicker3.css','../css/styles.css']
+  styleUrls: ['../vendor_block/bootstrap/css/bootstrap.min.css','../vendor_block/metisMenu/metisMenu.min.css','../vendor_block/datatables-plugins/dataTables.bootstrap.css',
+                '../vendor_block/datatables-responsive/dataTables.responsive.css',
+              '../dist/css/sb-admin-2.css',
+            '../vendor_block/font-awesome/css/font-awesome.min.css']
 })
 export class DashboardComponent {
 

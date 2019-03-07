@@ -7,20 +7,20 @@ import { Provider } from '../org.namespace.pqd';
 import { constant } from '../constant';
 @Injectable()
 export class AuthService {
-  loggedIn = false;
-  isVendor = false;
-  isCustomer = false;
-  isProvider = false;
+  loggedIn = true;
+  isVendor = true;
+  isCustomer = true;
+  isProvider = true;
   jwtHelper: JwtHelper = new JwtHelper();
   private NAMESPACE_CUSTOMER = 'Customer';
   private NAMESPACE_VENDOR = 'Vendor';
   private NAMESPACE_PROVIDER = 'Provider';
 
   constructor(private router: Router) {
-    this.loggedIn = false;
-    this.isVendor = false;
-    this.isCustomer = false;
-    this.isProvider = false;
+    this.loggedIn = true;
+    this.isVendor = true;
+    this.isCustomer = true;
+    this.isProvider = true;
   }
   
   setCurrentUser(decodedUser: string) {
