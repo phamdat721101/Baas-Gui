@@ -16,11 +16,16 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { CommodityProviderService } from './CommodityProvider.service';
 import 'rxjs/add/operator/toPromise';
+import 'datatables.net';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-commodityprovider',
   templateUrl: './CommodityProvider.component.html',
-  styleUrls: ['./CommodityProvider.component.css'],
+  styleUrls: ['../vendor_block/bootstrap/css/bootstrap.min.css','../vendor_block/metisMenu/metisMenu.min.css','../vendor_block/datatables-plugins/dataTables.bootstrap.css',
+  '../vendor_block/datatables-responsive/dataTables.responsive.css',
+'../dist/css/sb-admin-2.css',
+'../vendor_block/font-awesome/css/font-awesome.min.css'],
   providers: [CommodityProviderService]
 })
 export class CommodityProviderComponent implements OnInit {
@@ -37,6 +42,8 @@ export class CommodityProviderComponent implements OnInit {
   mainExchange = new FormControl('', Validators.required);
   quantity = new FormControl('', Validators.required);
   owner = new FormControl('', Validators.required);
+  tableInitiated: boolean = false;
+  table: any;
 
   constructor(public serviceCommodityProvider: CommodityProviderService, fb: FormBuilder) {
     this.myForm = fb.group({
@@ -46,10 +53,43 @@ export class CommodityProviderComponent implements OnInit {
       quantity: this.quantity,
       owner: this.owner
     });
+    this.initDatatable();
   };
 
   ngOnInit(): void {
     this.loadAll();
+  }
+  initDatatable() {
+    const ngThis = this;
+    this.tableInitiated = true;
+    $(document).ready(function () {
+      ngThis.table = $('#dataTables-example').DataTable({
+        stateSave: true,
+        pagingType: 'full_numbers',
+        dom: '<"top"fB>rt<"bottom"ipl>',
+        order: [[1, "asc"]],
+        columnDefs: [
+          { orderable: false, targets: [0] },
+          {
+            targets: [0],
+            className: 'dt-center'
+          }
+        ],
+        language: {
+          search: '_INPUT_',
+          searchPlaceholder: 'Search by name',
+          zeroRecords: 'Nothing found - sorry',
+          info: 'Show _START_ to _END_ of _TOTAL_ items',
+          lengthMenu: '_MENU_ per page',
+          paginate: {
+            previous: '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            next: '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+            first: '|<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            last: '<i class="fa fa-angle-right" aria-hidden="true"></i>|'
+          }
+        },
+      });
+    });
   }
 
   loadAll(): Promise<any> {

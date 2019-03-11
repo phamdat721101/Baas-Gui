@@ -16,11 +16,16 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { CustomerService } from './Customer.service';
 import 'rxjs/add/operator/toPromise';
+import 'datatables.net';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './Customer.component.html',
-  styleUrls: ['./Customer.component.css'],
+  styleUrls: ['../vendor_block/bootstrap/css/bootstrap.min.css','../vendor_block/metisMenu/metisMenu.min.css','../vendor_block/datatables-plugins/dataTables.bootstrap.css',
+  '../vendor_block/datatables-responsive/dataTables.responsive.css',
+'../dist/css/sb-admin-2.css',
+'../vendor_block/font-awesome/css/font-awesome.min.css'],
   providers: [CustomerService]
 })
 export class CustomerComponent implements OnInit {
@@ -31,6 +36,8 @@ export class CustomerComponent implements OnInit {
   private participant;
   private currentId;
   private errorMessage;
+  tableInitiated: boolean = false;
+  table: any;
 
   cuId = new FormControl('', Validators.required);
   username = new FormControl('', Validators.required);
@@ -43,10 +50,43 @@ export class CustomerComponent implements OnInit {
       username: this.username,
       password: this.password
     });
+    this.initDatatable();
   };
 
   ngOnInit(): void {
     this.loadAll();
+  }
+  initDatatable() {
+    const ngThis = this;
+    this.tableInitiated = true;
+    $(document).ready(function () {
+      ngThis.table = $('#dataTables-example').DataTable({
+        stateSave: true,
+        pagingType: 'full_numbers',
+        dom: '<"top"fB>rt<"bottom"ipl>',
+        order: [[1, "asc"]],
+        columnDefs: [
+          { orderable: false, targets: [0] },
+          {
+            targets: [0],
+            className: 'dt-center'
+          }
+        ],
+        language: {
+          search: '_INPUT_',
+          searchPlaceholder: 'Search by name',
+          zeroRecords: 'Nothing found - sorry',
+          info: 'Show _START_ to _END_ of _TOTAL_ items',
+          lengthMenu: '_MENU_ per page',
+          paginate: {
+            previous: '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            next: '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+            first: '|<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            last: '<i class="fa fa-angle-right" aria-hidden="true"></i>|'
+          }
+        },
+      });
+    });
   }
 
   loadAll(): Promise<any> {

@@ -18,6 +18,32 @@
 
 namespace org.namespace.pqd
 
+enum contractState{
+  o WAITING_SIGNATURES
+  o COMPLETE
+}
+
+asset contract identified by assetId {
+  o String assetId
+  o String documentHash
+  --> Provider creator
+  --> Customer signator
+  o Boolean creatorSigned
+  o Boolean signatorSigned
+  o contractState state
+}
+
+abstract transaction ledgerTransaction {
+  --> contract Contract
+}
+
+transaction signContract extends ledgerTransaction {
+  
+}
+
+transaction completeSignOff extends ledgerTransaction {
+}
+
 asset CommodityCustomer identified by tradingSymbol {
     o String tradingSymbol
     o String description
@@ -32,7 +58,7 @@ asset CommodityProvider identified by tradingSymbol {
     o Double quantity
     --> Provider owner
 }
-participant Vendor identified by venId {
+participant Vendor identified by venId{
     o String venId
     o String username
     o String password
@@ -41,13 +67,23 @@ transaction Trade {
     --> CommodityProvider data
     --> Customer owner
 }
-participant Provider identified by proId {
+participant Provider identified by proId{
   o String proId
   o String username
   o String password
 }
-participant Customer identified by cuId {
+participant Customer identified by cuId{
   o String cuId
   o String username
   o String password
+}
+
+event contractSignedNotification{
+  --> contract Contract
+  --> Provider SignerP
+  --> Customer SignerC
+}
+
+event contractCompletedNotification {
+  --> contract Contract
 }

@@ -56,3 +56,33 @@ rule R2b_ProviderSeeUpdateThemselvesOnly {
   condition: (v.getIdentifier() == t.getIdentifier())
   action: ALLOW
 }
+rule signContract{
+  description: "Allow all participants to submit Sign transactions"
+  participant: "ANY"
+  operation: ALL
+  resource: "org.namespace.pqd.ledgerTransaction"
+  action: ALLOW
+}
+rule createContract {
+  description: "Allow all members to create contracts"
+  participant:"ANY"
+  operation: CREATE
+  resource:"org.namespace.pqd.contract"
+  action: ALLOW
+}
+rule CustomerContractFullAccess {
+    description: "Allow all participants read access to their own contracts"
+    participant(c): "org.namespace.pqd.Customer"    
+    operation: READ, UPDATE
+    resource(r): "org.namespace.pqd.contract"
+    condition: (r.signator.getIdentifier() === c.getIdentifier())
+    action: ALLOW
+}
+rule ProviderContractFullAccess {
+    description: "Allow all participants read access to their own contracts"
+    participant(p): "org.namespace.pqd.Provider"    
+    operation: READ, UPDATE
+    resource(r): "org.namespace.pqd.contract"
+    condition: (r.creator.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
