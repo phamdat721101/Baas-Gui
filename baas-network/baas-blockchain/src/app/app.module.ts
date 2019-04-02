@@ -23,7 +23,8 @@ import { CustomerService } from './Customer/Customer.service';
 import { ProviderService } from './Provider/Provider.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-
+import { AddDataComponent } from './AddData/AddData.component';
+import { VerifyDataComponent } from './VerifyData/VerifyData.component';
 import { CommodityCustomerComponent } from './CommodityCustomer/CommodityCustomer.component';
 import { CommodityProviderComponent } from './CommodityProvider/CommodityProvider.component';
 import { DashboardComponent } from './Dashboard/Dashboard.component';
@@ -33,10 +34,14 @@ import { CustomerComponent } from './Customer/Customer.component';
 import { LoginComponent } from './Login/Login.component';
 import { TradeComponent } from './Trade/Trade.component';
 import { RegisterComponent } from './Register/Register.component';
-
+import { contractComponent } from './contract/contract.component';
+import { from } from 'rxjs/observable/from';
   @NgModule({
   declarations: [
     AppComponent,
+    AddDataComponent,
+    contractComponent,
+    VerifyDataComponent,
     HomeComponent,
     DashboardComponent,
     CommodityCustomerComponent,

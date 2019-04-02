@@ -27,12 +27,18 @@ import { LoginComponent } from './Login/Login.component';
 import { TradeComponent } from './Trade/Trade.component';
 import { RegisterComponent } from './Register/Register.component';
 import { DashboardComponent } from './Dashboard/Dashboard.component';
+import { AddDataComponent } from './AddData/AddData.component';
+import { VerifyDataComponent } from './VerifyData/VerifyData.component';
+import { contractComponent } from './contract/contract.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'CommodityCustomer', component: CommodityCustomerComponent, canActivate:[AuthService] },
   { path: 'CommodityProvider', component: CommodityProviderComponent, canActivate:[AuthService] },
-  { path: 'Dashboard', component: DashboardComponent, canActivate:[AuthService]},
+  { path: 'Dashboard', component: DashboardComponent},
+  { path: 'AddData', component: AddDataComponent},
+  { path: 'AddContract', component: contractComponent},
+  { path: 'VerifyData', component: VerifyDataComponent},
   { path: 'Vendor', component: VendorComponent, canActivate:[AuthService] },
   { path: 'Provider', component: ProviderComponent},
   { path: 'Customer', component: CustomerComponent},

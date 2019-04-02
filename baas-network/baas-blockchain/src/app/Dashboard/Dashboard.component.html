@@ -370,6 +370,17 @@
                       <a [routerLink]="['/CommodityProvider']"><i class="fa fa-wrench fa-fw"></i>List CommodityProviders</a>                      
                       <!-- /.nav-second-level -->
                   </li>
+                  <li>                     
+                    <a [routerLink]="['/AddContract']"><i class="fa fa-wrench fa-fw"></i>Contract<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a [routerLink]="['/AddData']">Add contract</a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/AddContract']">List contract</a>
+                                </li>
+                            </ul>
+                  </li>
                   <li>
                       <a [routerLink]="['/Dashboard']"><i class="fa fa-sitemap fa-fw"></i>Transactions</a>                      
                       <!-- /.nav-second-level -->
