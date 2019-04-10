@@ -56,6 +56,9 @@ async function signContract(sign){
             }
         }
     }
+    if(theContract.creatorSigned == true && theContract.signatorSigned == true){
+        theContract.state = 'COMPLETE';
+    }
     // let signedNotification = getFactory().newEvent('org.namespace.pqd','contractSignedNotification');
     // signedNotification.Contract = theContract;
     // if(me.getIdentifier() == theContract.creator){
