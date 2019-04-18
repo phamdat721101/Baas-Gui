@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
           && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Vendor');
-          this.router.navigate(['/Dashboard']);
+          this.router.navigate(['/Home']);
         }
         else{
           alert('Fail to login');
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
           && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Customer');
-          this.router.navigate(['/Dashboard']);
+          this.router.navigate(['/Home']);
         }
         else{
           alert('Fail to login');
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
           && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Provider');
-          this.router.navigate(['/Dashboard']);
+          this.router.navigate(['/Home']);
         }
         else{
           alert('Fail to login');

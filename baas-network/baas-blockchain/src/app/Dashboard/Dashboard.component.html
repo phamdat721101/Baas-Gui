@@ -126,7 +126,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" [routerLink]="['/Dashboard']">Baas-Blockchain</a>
+          <a class="navbar-brand" [routerLink]="['/Home']">Baas-Blockchain</a>
       </div>
       <!-- /.navbar-header -->
 
@@ -354,7 +354,7 @@
                       <!-- /input-group -->
                   </li>
                   <li>
-                      <a href="#"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                      <a [routerLink]="['/Home']"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
                   </li>
                   <li *ngIf="auth.isCustomer || auth.isVendor">
                       <a [routerLink]="['/Customer']"><i class="fa fa-bar-chart-o fa-fw"></i>Customers</a>
