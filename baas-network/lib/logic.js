@@ -100,3 +100,30 @@ async function completeSignOff(complete){
     const contractRegistry = await getAssetRegistry('org.namespace.pqd.contract');
     await contractRegistry.update(theContract);
 }
+
+/**
+ * Sample transaction
+ * @param {org.namespace.pqd.updateVoting} Trade
+ * @transaction
+ */
+async function updateVoting(tx) {  
+    try {
+        const assetRegistry = await getAssetRegistry('org.namespace.pqd.contract');
+        const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
+        //const me = getCurrentParticipant();
+        //const theContract = sign.Contract;
+        const provider = await providerRegistry.get(tx.Contract.creator.getIdentifier());        
+        tx.Contract.N = tx.Contract.N + 1;
+        if(tx.isSuccessData === true) {
+            tx.Contract.M = tx.Contract.M + 1;
+            provider.successDataCount = provider.successDataCount + 1;
+        }
+        tx.Contract.rateSuccess = tx.Contract.M / tx.Contract.N;
+        provider.allSendDataCount = provider.allSendDataCount + 1;
+        provider.ratingProvider = provider.successDataCount / provider.allSendDataCount;
+        await assetRegistry.update(tx.Contract);
+        await providerRegistry.update(provider);
+    } catch(exception) {
+        throw new Error(exception);
+    }
+}

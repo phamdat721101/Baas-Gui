@@ -15,9 +15,22 @@ import {Event} from './org.hyperledger.composer.system';
       creatorSigned: boolean;
       signatorSigned: boolean;
       state: contractState;
+      location: string;
+      description: string;
+      dayStart: string;
+      time: number;
+      price: number;
+      rateSuccessContract: number;
+      rateSuccess: number;
+      N: number;
+      M: number;
    }
    export abstract class ledgerTransaction extends Transaction {
       Contract: contract;
+   }
+   export class updateVoting extends Transaction {
+      Contract: contract;
+      isSuccessData: boolean;
    }
    export class signContract extends ledgerTransaction {
    }
@@ -50,11 +63,16 @@ import {Event} from './org.hyperledger.composer.system';
       proId: string;
       username: string;
       password: string;
+      successDataCount: number;
+      allSendDataCount: number;
+      ratingProvider: number;
+      signature: string;
    }
    export class Customer extends Participant {
       cuId: string;
       username: string;
       password: string;
+      signature: string;
    }
    export class contractSignedNotification extends Event {
       Contract: contract;

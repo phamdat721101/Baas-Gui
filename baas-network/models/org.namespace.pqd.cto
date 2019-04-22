@@ -31,12 +31,24 @@ asset contract identified by assetId {
   o Boolean creatorSigned
   o Boolean signatorSigned
   o contractState state
+  o String location
+  o String description
+  o String dayStart   // ngay bat dau hop dong
+  o Integer time      // thoi han hop dong tinh bang thang
+  o Double price      // gia tri hd
+  o Double rateSuccessContract      // ty le cam ket
+  o Double rateSuccess
+  o Integer N       // so lan lay du lieu
+  o Integer M       // so lan lay thanh cong
 }
 
 abstract transaction ledgerTransaction {
   --> contract Contract
 }
-
+transaction updateVoting {
+  --> contract Contract
+  o Boolean isSuccessData
+}
 transaction signContract extends ledgerTransaction {
   
 }
@@ -71,11 +83,16 @@ participant Provider identified by proId{
   o String proId
   o String username
   o String password
+  o Integer successDataCount
+  o Integer allSendDataCount
+  o Double ratingProvider
+  o String signature
 }
 participant Customer identified by cuId{
   o String cuId
   o String username
   o String password
+  o String signature
 }
 
 event contractSignedNotification{

@@ -86,3 +86,17 @@ rule ProviderContractFullAccess {
     condition: (r.creator.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
+rule Customer1 {
+    description:  "Customer co the xem ho so cua Provider"
+    participant: "org.namespace.pqd.Customer"
+    operation: READ
+    resource: "org.namespace.pqd.Provider"
+    action: ALLOW
+}
+rule Provider1 {
+     description: "Provider can read customer information"
+     participant: "org.namespace.pqd.Provider"
+     operation: READ
+     resource: "org.namespace.pqd.Customer"
+     action: ALLOW
+}
