@@ -40,10 +40,13 @@ export class ProviderComponent implements OnInit {
   proId = new FormControl('', Validators.required);
   username = new FormControl('', Validators.required);
   password = new FormControl('', Validators.required);
+<<<<<<< HEAD
   successDataCount = new FormControl('', Validators.required);
   allSendDataCount = new FormControl('', Validators.required);
   ratingProvider = new FormControl('', Validators.required);
   signature = new FormControl('', Validators.required);
+=======
+>>>>>>> 9b6af5d3aa1f0e77dc2508ee8bcebe4548cdb8fb
   tableInitiated: boolean = false;
   table: any;
 
@@ -59,7 +62,38 @@ export class ProviderComponent implements OnInit {
     });
     this.initDatatable();
   };
-
+  initDatatable() {
+    const ngThis = this;
+    this.tableInitiated = true;
+    $(document).ready(function () {
+      ngThis.table = $('#dataTables-example').DataTable({
+        stateSave: true,
+        pagingType: 'full_numbers',
+        dom: '<"top"fB>rt<"bottom"ipl>',
+        order: [[1, "asc"]],
+        columnDefs: [
+          { orderable: false, targets: [0] },
+          {
+            targets: [0],
+            className: 'dt-center'
+          }
+        ],
+        language: {
+          search: '_INPUT_',
+          searchPlaceholder: 'Search by name',
+          zeroRecords: 'Nothing found - sorry',
+          info: 'Show _START_ to _END_ of _TOTAL_ items',
+          lengthMenu: '_MENU_ per page',
+          paginate: {
+            previous: '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            next: '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+            first: '|<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            last: '<i class="fa fa-angle-right" aria-hidden="true"></i>|'
+          }
+        },
+      });
+    });
+  }
   ngOnInit(): void {
     this.loadAll();
   }

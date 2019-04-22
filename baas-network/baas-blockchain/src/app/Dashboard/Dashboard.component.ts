@@ -19,9 +19,15 @@ import { Router } from '@angular/router';
   selector: 'app-dashboard',
   templateUrl: './Dashboard.component.html',
   styleUrls: ['../vendor_block/bootstrap/css/bootstrap.min.css','../vendor_block/metisMenu/metisMenu.min.css','../vendor_block/datatables-plugins/dataTables.bootstrap.css',
+<<<<<<< HEAD
   '../vendor_block/datatables-responsive/dataTables.responsive.css',
 '../dist/css/sb-admin-2.css',
 '../vendor_block/font-awesome/css/font-awesome.min.css']
+=======
+                '../vendor_block/datatables-responsive/dataTables.responsive.css',
+              '../dist/css/sb-admin-2.css',
+            '../vendor_block/font-awesome/css/font-awesome.min.css']
+>>>>>>> 9b6af5d3aa1f0e77dc2508ee8bcebe4548cdb8fb
 })
 export class DashboardComponent {
 
