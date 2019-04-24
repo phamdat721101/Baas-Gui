@@ -40,6 +40,10 @@ export class ProviderComponent implements OnInit {
   proId = new FormControl('', Validators.required);
   username = new FormControl('', Validators.required);
   password = new FormControl('', Validators.required);
+  successDataCount = new FormControl('', Validators.required);
+  allSendDataCount = new FormControl('', Validators.required);
+  ratingProvider = new FormControl('', Validators.required);
+  signature = new FormControl('', Validators.required);
   tableInitiated: boolean = false;
   table: any;
 
@@ -47,7 +51,11 @@ export class ProviderComponent implements OnInit {
     this.myForm = fb.group({
       proId: this.proId,
       username: this.username,
-      password: this.password
+      password: this.password,
+      successDataCount: this.successDataCount,
+      allSendDataCount: this.allSendDataCount,
+      ratingProvider: this.ratingProvider,
+      signature: this.signature
     });
     this.initDatatable();
   };
@@ -139,13 +147,21 @@ export class ProviderComponent implements OnInit {
       $class: 'org.namespace.pqd.Provider',
       'proId': this.proId.value,
       'username': this.username.value,
-      'password': this.password.value
+      'password': this.password.value,
+      'successDataCount': this.successDataCount.value,
+      'allSendDataCount': this.allSendDataCount.value,
+      'ratingProvider': this.ratingProvider.value,
+      'signature': this.signature.value
     };
 
     this.myForm.setValue({
       'proId': null,
       'username': null,
-      'password': null
+      'password': null,
+      'successDataCount': null,
+      'allSendDataCount': null,
+      'ratingProvider': null,
+      'signature': null
     });
 
     return this.serviceProvider.addParticipant(this.participant)
@@ -155,7 +171,11 @@ export class ProviderComponent implements OnInit {
       this.myForm.setValue({
         'proId': null,
         'username': null,
-        'password': null
+        'password': null,
+        'successDataCount': null,
+        'allSendDataCount': null,
+        'ratingProvider': null,
+        'signature': null
       });
       this.loadAll(); 
     })
@@ -173,7 +193,11 @@ export class ProviderComponent implements OnInit {
     this.participant = {
       $class: 'org.namespace.pqd.Provider',
       'username': this.username.value,
-      'password': this.password.value
+      'password': this.password.value,
+      'successDataCount': this.successDataCount.value,
+      'allSendDataCount': this.allSendDataCount.value,
+      'ratingProvider': this.ratingProvider.value,
+      'signature': this.signature.value
     };
 
     return this.serviceProvider.updateParticipant(form.get('proId').value, this.participant)
@@ -226,7 +250,11 @@ export class ProviderComponent implements OnInit {
       const formObject = {
         'proId': null,
         'username': null,
-        'password': null
+        'password': null,
+        'successDataCount': null,
+        'allSendDataCount': null,
+        'ratingProvider': null,
+        'signature': null
       };
 
       if (result.proId) {
@@ -265,7 +293,11 @@ export class ProviderComponent implements OnInit {
     this.myForm.setValue({
       'proId': null,
       'username': null,
-      'password': null
+      'password': null,
+      'successDataCount': null,
+      'allSendDataCount': null,
+      'ratingProvider': null,
+      'signature': null
     });
   }
 }

@@ -42,13 +42,14 @@ export class CustomerComponent implements OnInit {
   cuId = new FormControl('', Validators.required);
   username = new FormControl('', Validators.required);
   password = new FormControl('', Validators.required);
-
+  signature = new FormControl('', Validators.required);
 
   constructor(public serviceCustomer: CustomerService, fb: FormBuilder) {
     this.myForm = fb.group({
       cuId: this.cuId,
       username: this.username,
-      password: this.password
+      password: this.password,
+      signature: this.signature
     });
     this.initDatatable();
   };
@@ -140,13 +141,15 @@ export class CustomerComponent implements OnInit {
       $class: 'org.namespace.pqd.Customer',
       'cuId': this.cuId.value,
       'username': this.username.value,
-      'password': this.password.value
+      'password': this.password.value,
+      'signature': this.signature.value
     };
 
     this.myForm.setValue({
       'cuId': null,
       'username': null,
-      'password': null
+      'password': null,
+      'signature': null
     });
 
     return this.serviceCustomer.addParticipant(this.participant)
@@ -156,7 +159,8 @@ export class CustomerComponent implements OnInit {
       this.myForm.setValue({
         'cuId': null,
         'username': null,
-        'password': null
+        'password': null,
+        'signature': null
       });
       this.loadAll(); 
     })
@@ -227,7 +231,8 @@ export class CustomerComponent implements OnInit {
       const formObject = {
         'cuId': null,
         'username': null,
-        'password': null
+        'password': null,
+        'signature': null
       };
 
       if (result.cuId) {
@@ -246,6 +251,11 @@ export class CustomerComponent implements OnInit {
         formObject.password = result.password;
       } else {
         formObject.password = null;
+      }
+      if (result.signature) {
+        formObject.signature = result.signature;
+      } else {
+        formObject.signature = null;
       }
 
       this.myForm.setValue(formObject);
@@ -266,7 +276,8 @@ export class CustomerComponent implements OnInit {
     this.myForm.setValue({
       'cuId': null,
       'username': null,
-      'password': null
+      'password': null,
+      'signature': null
     });
   }
 }

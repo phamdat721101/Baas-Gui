@@ -23,28 +23,37 @@
         <form [formGroup]="myForm">
           <div class="modal-body">
                 <div class="form-group text-left">
-                  <label for="proId">proId</label>
-                  
-                    <input formControlName="proId" type="text" class="form-control">
-                  
+                  <label for="proId">proId</label>                  
+                    <input formControlName="proId" type="text" class="form-control">                  
                 </div>
                 <div class="form-group text-left">
-                  <label for="username">username</label>
-                  
-                    <input formControlName="username" type="text" class="form-control">
-                  
+                  <label for="username">username</label>                  
+                    <input formControlName="username" type="text" class="form-control">                  
                 </div>
                 <div class="form-group text-left">
-                  <label for="password">password</label>
-                  
-                    <input formControlName="password" type="password" class="form-control">
-                  
+                  <label for="password">password</label>                  
+                    <input formControlName="password" type="password" class="form-control">                  
                 </div>
+                <div class="form-group text-left">
+                  <label for="successDataCount">successDataCount</label>                  
+                    <input formControlName="successDataCount" type="number" class="form-control">                  
+                </div>                                        
+                <div class="form-group text-left">
+                  <label for="allSendDataCount">allSendDataCount</label>                  
+                    <input formControlName="allSendDataCount" type="number" class="form-control">                  
+                </div>                                          
+                <div class="form-group text-left">
+                  <label for="ratingProvider">ratingProvider</label>                  
+                    <input formControlName="ratingProvider" type="number" step='any' class="form-control">                  
+                </div>                                          
+                <div class="form-group text-left">
+                  <label for="signature">signature</label>                  
+                    <input formControlName="signature" type="text" class="form-control">                
+                </div>                          
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button (click)="addParticipant(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
-  
+            <button (click)="addParticipant(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>  
           </div>
         </form>
       </div>
@@ -62,21 +71,13 @@
               <div class="form-group text-left">
                 <label for="proId">proId</label>
                   <input [ngModel]="proId" formControlName="proId" class="form-control" disabled="disabled">  
-              </div>
-            
+              </div>            
               <div class="form-group text-left">
-                <label for="username">username</label>
-  
-                
-                  <input [ngModel]="username"formControlName="username" type="text" class="form-control">
-                
-  
-              </div>
-            
+                <label for="username">username</label>                  
+                  <input [ngModel]="username"formControlName="username" type="text" class="form-control">                  
+              </div>          
               <div class="form-group text-left">
-                <label for="password">password</label>
-  
-                
+                <label for="password">password</label>                  
                   <input [ngModel]="password"formControlName="password" type="text" class="form-control">
               </div>
           </div>
@@ -195,7 +196,10 @@
                         <thead>
                             <tr>
                               <th>proId</th>
-                              <th>username</th>          
+                              <th>username</th>  
+                              <th>successDataCount</th>              
+                              <th>allSendDataCount</th>                          
+                              <th>ratingProvider</th>        
                               <th>Actions</th>
                             </tr>
                         </thead>
@@ -203,6 +207,9 @@
                             <tr class="odd gradeX" *ngFor="let participant of allParticipants">
                               <td>{{participant.proId}}</td>             
                               <td>{{participant.username}}</td>
+                              <td>{{participant.successDataCount}}</td>              
+                              <td>{{participant.allSendDataCount}}</td>                          
+                              <td>{{participant.ratingProvider}}</td>
                               <td class="center">
                                 <button (click)="getForm(participant.proId);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateParticipantModal">
                                     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

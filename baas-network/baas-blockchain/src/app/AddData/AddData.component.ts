@@ -39,12 +39,21 @@ export class AddDataComponent implements OnInit {
   public hash;
   someValue: string;
   assetId = new FormControl('', Validators.required);
-  documentHash = new FormControl('');
+  documentHash = new FormControl('', Validators.required);
   creator = new FormControl('', Validators.required);
   signator = new FormControl('', Validators.required);
   creatorSigned = new FormControl('', Validators.required);
   signatorSigned = new FormControl('', Validators.required);
   state = new FormControl('', Validators.required);
+  location = new FormControl('', Validators.required);
+  description = new FormControl('', Validators.required);
+  dayStart = new FormControl('', Validators.required);
+  time = new FormControl('', Validators.required);
+  price = new FormControl('', Validators.required);
+  rateSuccessContract = new FormControl('', Validators.required);
+  rateSuccess = new FormControl('', Validators.required);
+  N = new FormControl('', Validators.required);
+  M = new FormControl('', Validators.required);
   Contract = new FormControl('', Validators.required);
 
   constructor(public servicecontract: contractService, fb: FormBuilder, private router: Router, private auth: AuthService) {
@@ -55,7 +64,16 @@ export class AddDataComponent implements OnInit {
       signator: this.signator,
       creatorSigned: this.creatorSigned,
       signatorSigned: this.signatorSigned,
-      state: this.state
+      state: this.state,
+      location: this.location,
+      description: this.description,
+      dayStart: this.dayStart,
+      time: this.time,
+      price: this.price,
+      rateSuccessContract: this.rateSuccessContract,
+      rateSuccess: this.rateSuccess,
+      N: this.N,
+      M: this.M
     });
   };
 
@@ -87,7 +105,16 @@ export class AddDataComponent implements OnInit {
       'signator': this.signator.value,
       'creatorSigned': false,
       'signatorSigned': false,
-      'state': this.state.value
+      'state': this.state.value,
+      'location': this.location.value,
+      'description': this.description.value,
+      'dayStart': this.dayStart.value,
+      'time': this.time.value,
+      'price': this.price.value,
+      'rateSuccessContract': this.rateSuccessContract.value,
+      'rateSuccess': this.rateSuccess.value,
+      'N': this.N.value,
+      'M': this.M.value
     };
 
     this.myForm.setValue({
@@ -97,7 +124,16 @@ export class AddDataComponent implements OnInit {
       'signator': null,
       'creatorSigned': null,
       'signatorSigned': null,
-      'state': null
+      'state': null,
+      'location': null,
+      'description': null,
+      'dayStart': null,
+      'time': null,
+      'price': null,
+      'rateSuccessContract': null,
+      'rateSuccess': null,
+      'N': null,
+      'M': null
     });
 
     return this.servicecontract.addAsset(this.asset)
@@ -111,7 +147,16 @@ export class AddDataComponent implements OnInit {
         'signator': null,
         'creatorSigned': null,
         'signatorSigned': null,
-        'state': null
+        'state': null,
+        'location': null,
+        'description': null,
+        'dayStart': null,
+        'time': null,
+        'price': null,
+        'rateSuccessContract': null,
+        'rateSuccess': null,
+        'N': null,
+        'M': null
       });
       this.router.navigate(["/AddContract"]);
     })
@@ -131,7 +176,16 @@ export class AddDataComponent implements OnInit {
       'signator': null,
       'creatorSigned': null,
       'signatorSigned': null,
-      'state': null
+      'state': null,
+      'location': null,
+      'description': null,
+      'dayStart': null,
+      'time': null,
+      'price': null,
+      'rateSuccessContract': null,
+      'rateSuccess': null,
+      'N': null,
+      'M': null
       });
   }
 }
