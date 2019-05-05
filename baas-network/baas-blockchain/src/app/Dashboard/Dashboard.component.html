@@ -363,13 +363,6 @@
                   <li *ngIf="auth.isProvider || auth.isVendor">
                       <a [routerLink]="['/Provider']"><i class="fa fa-table fa-fw"></i>Providers</a>
                   </li>
-                  <li *ngIf="auth.isCustomer">
-                      <a [routerLink]="['/CommodityCustomer']"><i class="fa fa-edit fa-fw"></i>List CommodityCustomers</a>
-                  </li>
-                  <li *ngIf="auth.isProvider">
-                      <a [routerLink]="['/CommodityProvider']"><i class="fa fa-wrench fa-fw"></i>List CommodityProviders</a>                      
-                      <!-- /.nav-second-level -->
-                  </li>
                   <li>                     
                     <a [routerLink]="['/AddContract']"><i class="fa fa-wrench fa-fw"></i>Contract<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

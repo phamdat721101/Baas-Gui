@@ -56,29 +56,6 @@ transaction signContract extends ledgerTransaction {
 transaction completeSignOff extends ledgerTransaction {
 }
 
-asset CommodityCustomer identified by tradingSymbol {
-    o String tradingSymbol
-    o String description
-    o String mainExchange
-    o Double quantity
-    --> Customer owner
-}
-asset CommodityProvider identified by tradingSymbol {
-    o String tradingSymbol
-    o String description
-    o String mainExchange
-    o Double quantity
-    --> Provider owner
-}
-participant Vendor identified by venId{
-    o String venId
-    o String username
-    o String password
-}
-transaction Trade {
-    --> CommodityProvider data
-    --> Customer owner
-}
 participant Provider identified by proId{
   o String proId
   o String username
@@ -93,14 +70,4 @@ participant Customer identified by cuId{
   o String username
   o String password
   o String signature
-}
-
-event contractSignedNotification{
-  --> contract Contract
-  --> Provider SignerP
-  --> Customer SignerC
-}
-
-event contractCompletedNotification {
-  --> contract Contract
 }

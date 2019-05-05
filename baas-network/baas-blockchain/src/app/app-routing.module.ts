@@ -17,14 +17,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './Service/auth.service';
-import { CommodityCustomerComponent } from './CommodityCustomer/CommodityCustomer.component';
-import { CommodityProviderComponent } from './CommodityProvider/CommodityProvider.component';
 import { AppComponent } from './app.component';
-import { VendorComponent } from './Vendor/Vendor.component';
 import { ProviderComponent } from './Provider/Provider.component';
 import { CustomerComponent } from './Customer/Customer.component';
 import { LoginComponent } from './Login/Login.component';
-import { TradeComponent } from './Trade/Trade.component';
 import { RegisterComponent } from './Register/Register.component';
 import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { AddDataComponent } from './AddData/AddData.component';
@@ -33,16 +29,12 @@ import { contractComponent } from './contract/contract.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'CommodityCustomer', component: CommodityCustomerComponent, canActivate:[AuthService] },
-  { path: 'CommodityProvider', component: CommodityProviderComponent, canActivate:[AuthService] },
   { path: 'Dashboard', component: DashboardComponent},
   { path: 'AddData', component: AddDataComponent},
   { path: 'AddContract', component: contractComponent},
   { path: 'VerifyData', component: VerifyDataComponent},
-  { path: 'Vendor', component: VendorComponent, canActivate:[AuthService] },
   { path: 'Provider', component: ProviderComponent},
   { path: 'Customer', component: CustomerComponent},
-  { path: 'Trade', component: TradeComponent, canActivate:[AuthService]},
   { path: 'Login', component: LoginComponent},
   { path: 'Register', component: RegisterComponent},
   { path: 'Home', component: HomeComponent, canActivate:[AuthService]},

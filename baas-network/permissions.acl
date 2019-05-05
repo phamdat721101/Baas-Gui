@@ -12,23 +12,7 @@ rule SystemACL {
   resource: "org.hyperledger.composer.system.**"
   action: ALLOW
 }
-rule R1a_VendorSeeUpdateThemselvesOnly {
-  description: "Vendor can see and update their own record only"
-  participant(t): "org.namespace.pqd.Vendor"
-  operation: READ, UPDATE
-  resource(v): "org.namespace.pqd.Vendor"
-  condition: (v.getIdentifier() == t.getIdentifier())
-  action: ALLOW
-}
 
-rule R1b_CustomerSeeTheirCommodities {
-  description: "Vendor can see/work with their own Commodities"
-  participant(t): "org.namespace.pqd.Customer"
-  operation: ALL
-  resource(c): "org.namespace.pqd.CommodityCustomer"
-  condition: (c.owner.getIdentifier() == t.getIdentifier())
-  action: ALLOW
-}
 
 rule R1c_CustomerSeeUpdateThemselvesOnly {
   description: "Vendor can see and update their own record only"
@@ -39,14 +23,6 @@ rule R1c_CustomerSeeUpdateThemselvesOnly {
   action: ALLOW
 }
 
-rule R2a_ProviderSeeTheirCommodities {
-  description: "Vendor can see/work with their own Commodities"
-  participant(t): "org.namespace.pqd.Provider"
-  operation: ALL
-  resource(c): "org.namespace.pqd.CommodityProvider"
-  condition: (c.owner.getIdentifier() == t.getIdentifier())
-  action: ALLOW
-}
 
 rule R2b_ProviderSeeUpdateThemselvesOnly {
   description: "Vendor can see and update their own record only"

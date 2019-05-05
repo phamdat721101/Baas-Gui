@@ -19,16 +19,6 @@
  */
 
 /**
- * Sample transaction
- * @param {org.namespace.pqd.Trade} Trade
- * @transaction
- */
-async function tradeCommodity(trade) {
-    trade.commodity.owner = trade.newOwner;
-    let assetRegistry = await getAssetRegistry('org.namespace.pqd.Commodity');
-    await assetRegistry.update(trade.commodity);
-}
-/**
  * A member signs a contract
  * @param {org.namespace.pqd.signContract} sign - the signature to be processed
  * @transaction
@@ -59,14 +49,6 @@ async function signContract(sign){
     if(theContract.creatorSigned == true && theContract.signatorSigned == true){
         theContract.state = 'COMPLETE';
     }
-    // let signedNotification = getFactory().newEvent('org.namespace.pqd','contractSignedNotification');
-    // signedNotification.Contract = theContract;
-    // if(me.getIdentifier() == theContract.creator){
-    //     signedNotification.SignerP = getCurrentParticipant();
-    // }else{
-    //     signedNotification.SignerC = getCurrentParticipant();
-    // }
-    // emit(signedNotification);
     const contractRegistry = await getAssetRegistry('org.namespace.pqd.contract');
     await  contractRegistry.update(theContract);
 }
@@ -94,16 +76,13 @@ async function completeSignOff(complete){
             console.log('Signoff cannot be completed')
         }
     }
-    let completedNotification = getFactory().newEvent('org.namespace.pqd','contractCompletedNotification')
-    completedNotification.Contract = theContract;
-    emit(completedNotification);
     const contractRegistry = await getAssetRegistry('org.namespace.pqd.contract');
     await contractRegistry.update(theContract);
 }
 
 /**
  * Sample transaction
- * @param {org.namespace.pqd.updateVoting} Trade
+ * @param {org.namespace.pqd.updateVoting} voting
  * @transaction
  */
 async function updateVoting(tx) {  
