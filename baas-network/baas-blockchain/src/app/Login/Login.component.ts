@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
           && this.password.value == result.password){
           console.log('Success to login');
           this.auth.setCurrentUser('Vendor');
-          this.router.navigate(['/Home']);
+          window.location.href = "http://103.48.80.41:8080/"
         }
         else{
           alert('Fail to login');
