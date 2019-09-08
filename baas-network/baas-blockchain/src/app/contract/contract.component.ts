@@ -89,6 +89,9 @@ export class contractComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+    setInterval(() => { 
+      this.loadAll(); 
+    }, 1000);
   }
 
   loadAll(): Promise<any> {
@@ -147,7 +150,6 @@ export class contractComponent implements OnInit {
       reader.onload = function(evt) {
         console.log(evt);
         output = CryptoJS.SHA256(reader.result).toString(CryptoJS.enc.Hex);
-        console.log(btoa(output));
       }
       this.someValue = btoa(output);
       this.hash = output;

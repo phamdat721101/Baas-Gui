@@ -62,6 +62,9 @@ export class ProviderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+    setInterval(() => { 
+      this.loadAll(); 
+    }, 1000); 
   }
   initDatatable() {
     const ngThis = this;
