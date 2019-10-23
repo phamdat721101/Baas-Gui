@@ -26,12 +26,16 @@ import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { AddDataComponent } from './AddData/AddData.component';
 import { VerifyDataComponent } from './VerifyData/VerifyData.component';
 import { contractComponent } from './contract/contract.component';
+import { ContractDetailComponent } from './contract-detail/contract-detail.component';
+import { ServicedetailComponent } from './servicedetail/servicedetail.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'Service/:id', component: ServicedetailComponent},
+  { path: 'ContractDetail/:id', component: ContractDetailComponent },
   { path: 'Dashboard', component: DashboardComponent},
   { path: 'AddData', component: AddDataComponent},
-  { path: 'AddContract', component: contractComponent},
+  { path: 'AddContract/:id', component: contractComponent},
   { path: 'VerifyData', component: VerifyDataComponent},
   { path: 'Provider', component: ProviderComponent},
   { path: 'Customer', component: CustomerComponent},

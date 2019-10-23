@@ -12,9 +12,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../Service/auth.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,7 +24,9 @@ import { Router } from '@angular/router';
 '../dist/css/sb-admin-2.css',
 '../vendor_block/font-awesome/css/font-awesome.min.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
+  private sub;
+  private id;
 
   constructor (
     public auth: AuthService,
@@ -31,4 +34,7 @@ export class HomeComponent {
   ) {
   }
 
+  ngOnInit(): void {
+    this.id = sessionStorage.getItem('id');
+  }
 }

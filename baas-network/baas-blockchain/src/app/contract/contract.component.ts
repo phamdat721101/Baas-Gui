@@ -14,6 +14,8 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { contractService } from './contract.service';
 import 'rxjs/add/operator/toPromise';
 import CryptoJS from 'crypto-js';
@@ -40,6 +42,8 @@ export class contractComponent implements OnInit {
   private currentId;
   private errorMessage;
   public hash;
+  private sub;
+  private id;  
   someValue: string;
   assetId = new FormControl('', Validators.required);
   documentHash = new FormControl('', Validators.required);
@@ -59,7 +63,7 @@ export class contractComponent implements OnInit {
   M = new FormControl('', Validators.required);
   Contract = new FormControl('', Validators.required);
 
-  constructor(public servicecontract: contractService, fb: FormBuilder) {
+  constructor(public servicecontract: contractService, fb: FormBuilder, private router: Router , private _Activatedroute:ActivatedRoute) {
     this.myForm = fb.group({
       assetId: this.assetId,
       documentHash: this.documentHash,
@@ -88,21 +92,32 @@ export class contractComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loadAll();
+    this.sub=this._Activatedroute.paramMap.subscribe(params => {       
+      this.id = params.get('id'); 
+      console.log(this.id);
+      this.loadAll(this.id);             
+    });    
     setInterval(() => { 
-      this.loadAll(); 
+      this.loadAll(this.id); 
     }, 1000);
   }
 
-  loadAll(): Promise<any> {
+  loadAll(id): Promise<any> {
     const tempList = [];
+    let creatorInfo;
+    let signatorInfo;
     return this.servicecontract.getAll()
     .toPromise()
     .then((result) => {
       this.errorMessage = null;
-      result.forEach(asset => {
-        tempList.push(asset);
+      result.forEach(asset => {                               
+        creatorInfo = JSON.stringify(asset.creator);        
+        signatorInfo = JSON.stringify(asset.signator);
+        if(creatorInfo.indexOf(id) != -1 || signatorInfo.indexOf(id) != -1){
+          tempList.push(asset);
+        }        
       });
+      console.log(tempList);
       this.allAssets = tempList;
     })
     .catch((error) => {
@@ -155,136 +170,136 @@ export class contractComponent implements OnInit {
       this.hash = output;
     }
   }
-  addAsset(form: any): Promise<any> {
-    this.asset = {
-      $class: 'org.namespace.pqd.contract',
-      'assetId': this.assetId.value,
-      'documentHash': this.documentHash.value,
-      'creator': this.creator.value,
-      'signator': this.signator.value,
-      'creatorSigned': false,
-      'signatorSigned': false,
-      'state': this.state.value,
-      'location': this.location.value,
-      'description': this.description.value,
-      'dayStart': this.dayStart.value,
-      'time': this.time.value,
-      'price': this.price.value,
-      'rateSuccessContract': this.rateSuccessContract.value,
-      'rateSuccess': this.rateSuccess.value,
-      'N': this.N.value,
-      'M': this.M.value
-    };
+  // addAsset(form: any): Promise<any> {
+  //   this.asset = {
+  //     $class: 'org.namespace.pqd.contract',
+  //     'assetId': this.assetId.value,
+  //     'documentHash': this.documentHash.value,
+  //     'creator': this.creator.value,
+  //     'signator': this.signator.value,
+  //     'creatorSigned': false,
+  //     'signatorSigned': false,
+  //     'state': this.state.value,
+  //     'location': this.location.value,
+  //     'description': this.description.value,
+  //     'dayStart': this.dayStart.value,
+  //     'time': this.time.value,
+  //     'price': this.price.value,
+  //     'rateSuccessContract': this.rateSuccessContract.value,
+  //     'rateSuccess': this.rateSuccess.value,
+  //     'N': this.N.value,
+  //     'M': this.M.value
+  //   };
 
-    this.myForm.setValue({
-      'assetId': null,
-      'documentHash': null,
-      'creator': null,
-      'signator': null,
-      'creatorSigned': null,
-      'signatorSigned': null,
-      'state': null,
-      'location': null,
-      'description': null,
-      'dayStart': null,
-      'time': null,
-      'price': null,
-      'rateSuccessContract': null,
-      'rateSuccess': null,
-      'N': null,
-      'M': null
-    });
+  //   this.myForm.setValue({
+  //     'assetId': null,
+  //     'documentHash': null,
+  //     'creator': null,
+  //     'signator': null,
+  //     'creatorSigned': null,
+  //     'signatorSigned': null,
+  //     'state': null,
+  //     'location': null,
+  //     'description': null,
+  //     'dayStart': null,
+  //     'time': null,
+  //     'price': null,
+  //     'rateSuccessContract': null,
+  //     'rateSuccess': null,
+  //     'N': null,
+  //     'M': null
+  //   });
 
-    return this.servicecontract.addAsset(this.asset)
-    .toPromise()
-    .then(() => {
-      this.errorMessage = null;
-      this.myForm.setValue({
-        'assetId': null,
-        'documentHash': null,
-        'creator': null,
-        'signator': null,
-        'creatorSigned': null,
-        'signatorSigned': null,
-        'state': null,
-        'location': null,
-        'description': null,
-        'dayStart': null,
-        'time': null,
-        'price': null,
-        'rateSuccessContract': null,
-        'rateSuccess': null,
-        'N': null,
-        'M': null
-      });
-      this.loadAll();
-    })
-    .catch((error) => {
-      if (error === 'Server error') {
-          this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
-      } else {
-          this.errorMessage = error;
-      }
-    });
-  }
-
-
-  updateAsset(form: any): Promise<any> {
-    this.asset = {
-      $class: 'org.namespace.pqd.contract',
-      'documentHash': this.documentHash.value,
-      'creator': this.creator.value,
-      'signator': this.signator.value,
-      'creatorSigned': this.creatorSigned.value,
-      'signatorSigned': this.signatorSigned.value,
-      'state': this.state.value,
-      'location': this.location.value,
-      'description': this.description.value,
-      'dayStart': this.dayStart.value,
-      'time': this.time.value,
-      'price': this.price.value,
-      'rateSuccessContract': this.rateSuccessContract.value,
-      'rateSuccess': this.rateSuccess.value,
-      'N': this.N.value,
-      'M': this.M.value
-    };
-
-    return this.servicecontract.updateAsset(form.get('assetId').value, this.asset)
-    .toPromise()
-    .then(() => {
-      this.errorMessage = null;
-      this.loadAll();
-    })
-    .catch((error) => {
-      if (error === 'Server error') {
-        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
-      } else if (error === '404 - Not Found') {
-        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
-      } else {
-        this.errorMessage = error;
-      }
-    });
-  }
+  //   return this.servicecontract.addAsset(this.asset)
+  //   .toPromise()
+  //   .then(() => {
+  //     this.errorMessage = null;
+  //     this.myForm.setValue({
+  //       'assetId': null,
+  //       'documentHash': null,
+  //       'creator': null,
+  //       'signator': null,
+  //       'creatorSigned': null,
+  //       'signatorSigned': null,
+  //       'state': null,
+  //       'location': null,
+  //       'description': null,
+  //       'dayStart': null,
+  //       'time': null,
+  //       'price': null,
+  //       'rateSuccessContract': null,
+  //       'rateSuccess': null,
+  //       'N': null,
+  //       'M': null
+  //     });
+  //     this.loadAll();
+  //   })
+  //   .catch((error) => {
+  //     if (error === 'Server error') {
+  //         this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+  //     } else {
+  //         this.errorMessage = error;
+  //     }
+  //   });
+  // }
 
 
-  deleteAsset(): Promise<any> {
+  // updateAsset(form: any): Promise<any> {
+  //   this.asset = {
+  //     $class: 'org.namespace.pqd.contract',
+  //     'documentHash': this.documentHash.value,
+  //     'creator': this.creator.value,
+  //     'signator': this.signator.value,
+  //     'creatorSigned': this.creatorSigned.value,
+  //     'signatorSigned': this.signatorSigned.value,
+  //     'state': this.state.value,
+  //     'location': this.location.value,
+  //     'description': this.description.value,
+  //     'dayStart': this.dayStart.value,
+  //     'time': this.time.value,
+  //     'price': this.price.value,
+  //     'rateSuccessContract': this.rateSuccessContract.value,
+  //     'rateSuccess': this.rateSuccess.value,
+  //     'N': this.N.value,
+  //     'M': this.M.value
+  //   };
 
-    return this.servicecontract.deleteAsset(this.currentId)
-    .toPromise()
-    .then(() => {
-      this.errorMessage = null;
-      this.loadAll();
-    })
-    .catch((error) => {
-      if (error === 'Server error') {
-        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
-      } else if (error === '404 - Not Found') {
-        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
-      } else {
-        this.errorMessage = error;
-      }
-    });
-  }
+  //   return this.servicecontract.updateAsset(form.get('assetId').value, this.asset)
+  //   .toPromise()
+  //   .then(() => {
+  //     this.errorMessage = null;
+  //     this.loadAll();
+  //   })
+  //   .catch((error) => {
+  //     if (error === 'Server error') {
+  //       this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+  //     } else if (error === '404 - Not Found') {
+  //       this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+  //     } else {
+  //       this.errorMessage = error;
+  //     }
+  //   });
+  // }
+
+
+  // deleteAsset(): Promise<any> {
+
+  //   return this.servicecontract.deleteAsset(this.currentId)
+  //   .toPromise()
+  //   .then(() => {
+  //     this.errorMessage = null;
+  //     this.loadAll();
+  //   })
+  //   .catch((error) => {
+  //     if (error === 'Server error') {
+  //       this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+  //     } else if (error === '404 - Not Found') {
+  //       this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+  //     } else {
+  //       this.errorMessage = error;
+  //     }
+  //   });
+  // }
 
   setId(id: any): void {
     this.currentId = id;
@@ -445,63 +460,67 @@ export class contractComponent implements OnInit {
       'M': null
       });
   }
-  addTransaction(form: any): Promise<any> {
-    this.Transaction = {
-      $class: 'org.namespace.pqd.signContract',
-      'Contract': this.Contract.value
-    };
+  // addTransaction(form: any): Promise<any> {
+  //   this.Transaction = {
+  //     $class: 'org.namespace.pqd.signContract',
+  //     'Contract': this.Contract.value
+  //   };
 
-    this.signForm.setValue({
-      'Contract': null
-    });
+  //   this.signForm.setValue({
+  //     'Contract': null
+  //   });
 
-    return this.servicecontract.addTransaction(this.Transaction)
-    .toPromise()
-    .then(() => {
-      this.errorMessage = null;
-      this.signForm.setValue({
-        'Contract': null,
-      });
-      this.loadAll();
-    })
-    .catch((error) => {
-      if (error === 'Server error') {
-        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
-      } else {
-        this.errorMessage = error;
-      }
-    });
-  }
-  addVotingTransaction(form: any): Promise<any>{
-    this.Transaction = {
-      $class: 'org.namespace.pqd.updateVoting',
-      'Contract': this.Contract_v.value,
-      'isSuccessData': this.isSuccessData.value      
-    };
+  //   return this.servicecontract.addTransaction(this.Transaction)
+  //   .toPromise()
+  //   .then(() => {
+  //     this.errorMessage = null;
+  //     this.signForm.setValue({
+  //       'Contract': null,
+  //     });
+  //     this.loadAll();
+  //   })
+  //   .catch((error) => {
+  //     if (error === 'Server error') {
+  //       this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+  //     } else {
+  //       this.errorMessage = error;
+  //     }
+  //   });
+  // }
+  // addVotingTransaction(form: any): Promise<any>{
+  //   this.Transaction = {
+  //     $class: 'org.namespace.pqd.updateVoting',
+  //     'Contract': this.Contract_v.value,
+  //     'isSuccessData': this.isSuccessData.value      
+  //   };
 
-    this.votingForm.setValue({
-      'Contract_v': null,
-      'isSuccessData': null      
-    });
+  //   this.votingForm.setValue({
+  //     'Contract_v': null,
+  //     'isSuccessData': null      
+  //   });
     
 
-    return this.servicecontract.addTransaction(this.Transaction)
-    .toPromise()
-    .then(() => {
-      this.errorMessage = null;
-      this.votingForm.setValue({
-        'Contract_v': null,
-        'isSuccessData': null        
-      });
-      this.loadAll();
-    })
-    .catch((error) => {
-      if (error === 'Server error') {
-        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
-      } else {
-        this.errorMessage = error;
-      }
-    });
+  //   return this.servicecontract.addTransaction(this.Transaction)
+  //   .toPromise()
+  //   .then(() => {
+  //     this.errorMessage = null;
+  //     this.votingForm.setValue({
+  //       'Contract_v': null,
+  //       'isSuccessData': null        
+  //     });
+  //     this.loadAll();
+  //   })
+  //   .catch((error) => {
+  //     if (error === 'Server error') {
+  //       this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+  //     } else {
+  //       this.errorMessage = error;
+  //     }
+  //   });
+  // }
+
+  getDetail(assetId){
+    this.router.navigate(['ContractDetail',assetId]);
   }
 
 }

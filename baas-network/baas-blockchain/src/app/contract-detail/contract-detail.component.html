@@ -1,0 +1,99 @@
+<app-dashboard></app-dashboard>
+<div class="container">
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+		<strong>Error:</strong> {{errorMessage}}
+	</div>
+
+  <div class="row">
+      <h2>Detail of contract # {{contractDetail.assetId}}</h2>
+  </div>  
+
+  <div *ngIf="performedTransactions.length == 0 && systemTransactions.length == 0" class="row">
+    <h4>No transactions</h4>
+  </div>
+  <div class="row"> 
+    <div class="col-sm-6">
+      <h4>Contract: {{contractDetail.assetId}}</h4>
+    </div>    
+    <div class="col-sm-6">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col-sm-6">
+      <h4>Provider: {{contractDetail.creator}}</h4>  
+    </div>  
+    <div class="col-sm-3">
+      <h4>Satisfaction: {{contractDetail.rateSuccess}}</h4>
+    </div>
+    <div class="col-sm-3">
+      <h4>Reliability: {{contractDetail.rateSuccessContract}}</h4>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col-sm-6">
+      <h4>Customer: {{contractDetail.signator}}</h4>
+    </div>    
+  </div>
+
+  <div *ngIf="performedTransactions.length > 0" class="row" >
+    <h4>Performed Transactions</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+            Transaction Type
+          </th>
+          <th>
+            Transaction ID
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of performedTransactions">
+          <td>
+            {{transaction.transactionType}}
+          </td>
+          <td>
+            {{transaction.transactionId}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <br>
+    <br>
+  </div>
+  <div *ngIf="systemTransactions.length > 0" class="row">
+    <h4>System Transactions</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>
+            Transaction Type
+          </th>
+          <th>
+            Transaction ID
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of systemTransactions">
+          <td>
+            {{transaction.transactionType}}
+          </td>
+          <td>
+            {{transaction.transactionId}}
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+  </div>
+  <div class="row">
+    <br>
+    <br>
+  </div>
+</div>

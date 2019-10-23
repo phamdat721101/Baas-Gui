@@ -32,6 +32,8 @@ import { LoginComponent } from './Login/Login.component';
 import { RegisterComponent } from './Register/Register.component';
 import { contractComponent } from './contract/contract.component';
 import { from } from 'rxjs/observable/from';
+import { ContractDetailComponent } from './contract-detail/contract-detail.component';
+import { ServicedetailComponent } from './servicedetail/servicedetail.component';
   @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,9 @@ import { from } from 'rxjs/observable/from';
     ProviderComponent,
     CustomerComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ContractDetailComponent,
+    ServicedetailComponent
   ],
   imports: [
     BrowserModule,
