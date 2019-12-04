@@ -25,7 +25,9 @@ export class ServicedetailComponent implements OnInit {
   ngOnInit() {
     this.sub=this._Activatedroute.paramMap.subscribe(params => {       
       this.id = params.get('id'); 
-      this.loadProviderService(this.id);
+      setInterval(() => { 
+        this.loadProviderService(this.id);
+      }, 1000);      
    });
   }
 

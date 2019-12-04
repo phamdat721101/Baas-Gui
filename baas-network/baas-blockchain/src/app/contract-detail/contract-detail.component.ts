@@ -31,7 +31,9 @@ export class ContractDetailComponent implements OnInit {
        console.log(this.id);
        this.loadContract(this.id);             
     });
-    this.loadAllTransactions();
+    setInterval(() => { 
+      this.loadAllTransactions();
+    }, 1000);    
   }
 
   loadContract(id): any{
