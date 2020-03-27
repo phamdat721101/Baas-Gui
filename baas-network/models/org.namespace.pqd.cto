@@ -23,15 +23,28 @@ enum contractState{
   o COMPLETE
 }
 
+concept serviceStat {
+  o String serviceId
+  o Integer successCount
+  o Integer totalCount
+}
+
+concept locationService {
+  o String province
+  o String district
+  o String address
+}
+
 asset contract identified by assetId {
   o String assetId
-  o String documentHash
+  o String serviceId
+  o String[] documentHash
   --> Provider creator
   --> Customer signator
   o Boolean creatorSigned
   o Boolean signatorSigned
   o contractState state
-  o String location
+  o locationService location
   o String description
   o String dayStart   // ngay bat dau hop dong
   o Integer time      // thoi han hop dong tinh bang thang
@@ -50,6 +63,7 @@ transaction updateVoting {
   o Boolean isSuccessData
 }
 transaction signContract extends ledgerTransaction {
+  o String dataHash
   
 }
 
@@ -64,7 +78,15 @@ participant Provider identified by proId{
   o Integer allSendDataCount
   o Double ratingProvider
   o String signature
+  o serviceStat[] listServiceStat
 }
+
+transaction updateServiceStat {
+  --> contract Contract
+  --> Provider provider
+  o Boolean isSuccessData
+}
+
 participant Customer identified by cuId{
   o String cuId
   o String username
