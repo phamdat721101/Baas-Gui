@@ -49,6 +49,7 @@ async function signContract(sign){
     if(theContract.creatorSigned == true && theContract.signatorSigned == true){
         theContract.state = 'COMPLETE';
     }
+  	theContract.documentHash.push(sign.transactionId);
     const contractRegistry = await getAssetRegistry('org.namespace.pqd.contract');
     await  contractRegistry.update(theContract);
 }
@@ -104,5 +105,61 @@ async function updateVoting(tx) {
         await providerRegistry.update(provider);
     } catch(exception) {
         throw new Error(exception);
+    }
+}
+
+
+/**
+ * Sample transaction
+ * @param {org.namespace.pqd.updateServiceStat} update
+ * @transaction
+ */
+async function updateServiceStat(tx) {
+	const assetRegistry = await getAssetRegistry('org.namespace.pqd.contract');
+    const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
+ 	const provider = await providerRegistry.get(tx.Contract.creator.getIdentifier());
+    var index;
+    var isExistId = false;
+    if(provider.listServiceStat.length === 0) {
+        var factory = getFactory();
+        var newService = factory.newConcept('org.namespace.pqd', 'serviceStat');
+        newService.serviceId = tx.Contract.serviceId;
+        newService.totalCount = 1;
+        if(tx.isSuccessData === true) {
+            newService.successCount = 1;
+        }
+        else {
+            newService.successCount = 0;
+        }
+        provider.listServiceStat.push(newService);
+        await providerRegistry.update(provider);
+    }
+    else {
+        for(index = 0; index < provider.listServiceStat.length; index++) {
+            if(provider.listServiceStat[index].serviceId === tx.Contract.serviceId) {
+                isExistId = true;
+                provider.listServiceStat[index].totalCount = provider.listServiceStat[index].totalCount + 1;
+                if(tx.isSuccessData === true) {
+                    provider.listServiceStat[index].successCount =  provider.listServiceStat[index].successCount +1;
+                }
+                await providerRegistry.update(provider);
+                return;
+            }
+        }
+        if(isExistId === false) {
+            var factory = getFactory();
+            var newService = factory.newConcept('org.namespace.pqd', 'serviceStat');
+            newService.serviceId = tx.Contract.serviceId;
+            newService.totalCount = 1;
+            if(tx.isSuccessData === true) {
+                newService.successCount = 1;
+            }
+            else {
+                newService.successCount = 0;
+            }
+            provider.listServiceStat.push(newService);
+            await providerRegistry.update(provider);
+        }
+
     }
 }

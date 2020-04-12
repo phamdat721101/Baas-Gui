@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
 import { Customer } from '../org.namespace.pqd';
-import { Vendor } from '../org.namespace.pqd';
 import { Provider } from '../org.namespace.pqd';
 import { constant } from '../constant';
 @Injectable()
@@ -12,20 +11,17 @@ export class AuthService {
   isCustomer = false;
   isProvider = false;
   jwtHelper: JwtHelper = new JwtHelper();
-  private NAMESPACE_CUSTOMER = 'Customer';
-  private NAMESPACE_VENDOR = 'Vendor';
+  private NAMESPACE_CUSTOMER = 'Customer';  
   private NAMESPACE_PROVIDER = 'Provider';
 
   constructor(private router: Router) {
-    this.loggedIn = false;
-    this.isVendor = false;
+    this.loggedIn = false;    
     this.isCustomer = false;
     this.isProvider = false;
   }
   
   setCurrentUser(decodedUser: string) {
-    this.loggedIn = true;
-    this.isVendor = (decodedUser === constant.ROLE_VENDOR);
+    this.loggedIn = true;    
     this.isCustomer = (decodedUser === constant.ROLE_CUSTOMER);
     this.isProvider = (decodedUser === constant.ROLE_PROVIDER);
   }

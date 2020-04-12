@@ -352,20 +352,7 @@ export class contractComponent implements OnInit {
         formObject.signator = result.signator;
       } else {
         formObject.signator = null;
-      }
-
-      if (result.creatorSigned) {
-        formObject.creatorSigned = result.creatorSigned;
-      } else {
-        formObject.creatorSigned = null;
-      }
-
-      if (result.signatorSigned) {
-        formObject.signatorSigned = result.signatorSigned;
-      } else {
-        formObject.signatorSigned = null;
-      }
-
+      }      
       if (result.state) {
         formObject.state = result.state;
       } else {

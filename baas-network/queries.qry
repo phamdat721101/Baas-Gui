@@ -1,0 +1,32 @@
+query selectContractOfProvider {
+  description: "Select all contract of a provider"
+  statement:
+      SELECT org.namespace.pqd.contract
+          WHERE (creator == _$provider)
+}
+
+query selectOneServiceRatingProvider {
+  description: "Select rating of a service of all provider"
+  statement:
+      SELECT org.namespace.pqd.Provider
+          WHERE (ratingProvider == _$provider)
+}
+
+query selectAllProviderOneServiceGoodRating {
+  description: "Select all providers of one service"
+  statement:
+      SELECT org.namespace.pqd.Provider
+          WHERE (listServiceStat CONTAINS [_$idService])
+}
+
+query selectProviderWithMinimumRating {
+  description: "Select all provider with total all service minimum success rating"
+  statement:
+      SELECT org.namespace.pqd.Provider
+          WHERE (ratingProvider > _$Threshold)
+}
+
+
+
+
+

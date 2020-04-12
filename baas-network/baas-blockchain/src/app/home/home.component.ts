@@ -14,6 +14,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../Service/auth.service';
+import { contractService } from '../contract/contract.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 @Component({
@@ -22,19 +23,61 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['../vendor_block/bootstrap/css/bootstrap.min.css','../vendor_block/metisMenu/metisMenu.min.css','../vendor_block/datatables-plugins/dataTables.bootstrap.css',
   '../vendor_block/datatables-responsive/dataTables.responsive.css',
 '../dist/css/sb-admin-2.css',
-'../vendor_block/font-awesome/css/font-awesome.min.css']
+'../vendor_block/font-awesome/css/font-awesome.min.css'],
+  providers: [contractService]
 })
-export class HomeComponent implements OnInit{
-  private sub;
-  private id;
+export class HomeComponent implements OnInit{  
+  private id;  
+  public errorMessage;
+  public allAssets;
+  public notify_message;
 
   constructor (
-    public auth: AuthService,
+    public auth: AuthService,    
+    public contractService: contractService,
     private Router: Router
-  ) {
+  ) {        
   }
 
-  ngOnInit(): void {
-    this.id = sessionStorage.getItem('id');
+  ngOnInit(): void {    
+    this.id = sessionStorage.getItem('id');      
+    setInterval(() => {       
+      this.loadAll(this.id);       
+    }, 1000);
+  }
+
+  /*-Start to load All SLA contract-*/
+  loadAll(id): Promise<any> {
+    const tempList = [];
+    const notifyList = [];
+    let creatorInfo;
+    let signatorInfo;
+    return this.contractService.getAll()
+    .toPromise()
+    .then((result) => {
+      this.errorMessage = null;
+      result.forEach(asset => {                               
+        creatorInfo = JSON.stringify(asset.creator);        
+        signatorInfo = JSON.stringify(asset.signator); 
+        if(asset.timeState == "PenaltyRule"){
+          notifyList.push("Data of " + asset.assetId + " was not been sent after 15 minutes");
+        }
+        if(creatorInfo.indexOf(id) != -1 || signatorInfo.indexOf(id) != -1){
+          tempList.push(asset);
+        }        
+      }); 
+      this.notify_message = notifyList;
+      console.log("Length of notify ", this.notify_message.length);
+      this.allAssets = tempList;
+    })
+    .catch((error) => {
+      if (error === 'Server error') {
+        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+      } else if (error === '404 - Not Found') {
+        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+      } else {
+        this.errorMessage = error;
+      }
+    });
   }
 }

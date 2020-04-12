@@ -5,11 +5,14 @@ import 'rxjs/add/operator/toPromise';
 import { ContractDetailService } from './contract-detail.service';
 import { contractService } from '../contract/contract.service';
 import {contract} from '../org.namespace.pqd';
+import { Router } from '@angular/router';
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-contract-detail',
   templateUrl: './contract-detail.component.html',
-  styleUrls: ['./contract-detail.component.css'],
+  styleUrls: ['../vendor_block/bootstrap/css/bootstrap.min.css','../vendor_block/metisMenu/metisMenu.min.css','../vendor_block/datatables-plugins/dataTables.bootstrap.css',
+  '../vendor_block/datatables-responsive/dataTables.responsive.css', '../dist/css/sb-admin-2.css', '../vendor_block/font-awesome/css/font-awesome.min.css'],
   providers: [ContractDetailService, contractService]
 })
 export class ContractDetailComponent implements OnInit {
@@ -21,14 +24,16 @@ export class ContractDetailComponent implements OnInit {
   private performedTransactions;
   contractDetail : contract;
 
-  constructor( public serviceTransaction: ContractDetailService,fb: FormBuilder, private _Activatedroute:ActivatedRoute, private contractService: contractService ) {
-
+  constructor( public serviceTransaction: ContractDetailService,fb: FormBuilder, 
+    private _Activatedroute:ActivatedRoute, 
+    private contractService: contractService, 
+    public auth: AuthService,
+    private Router: Router) {
   };
 
   ngOnInit(): void {
     this.sub=this._Activatedroute.paramMap.subscribe(params => {       
-       this.id = params.get('id'); 
-       console.log(this.id);
+       this.id = params.get('id');        
        this.loadContract(this.id);             
     });
     setInterval(() => { 
@@ -39,8 +44,7 @@ export class ContractDetailComponent implements OnInit {
   loadContract(id): any{
     return this.contractService.getAsset(id).toPromise()
     .then((result) => {
-      this.errorMessage = null;     
-      console.log(result)
+      this.errorMessage = null;           
       this.contractDetail = result;
       return result; 
     })

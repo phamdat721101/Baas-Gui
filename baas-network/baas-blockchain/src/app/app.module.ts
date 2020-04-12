@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { DataService } from './data.service';
 import { AuthService } from './Service/auth.service';
+import { NotifyService } from './Service/notify.service';
 import { CustomerService } from './Customer/Customer.service';
 import { ProviderService } from './Provider/Provider.service';
 import { AppComponent } from './app.component';
@@ -33,7 +34,10 @@ import { RegisterComponent } from './Register/Register.component';
 import { contractComponent } from './contract/contract.component';
 import { from } from 'rxjs/observable/from';
 import { ContractDetailComponent } from './contract-detail/contract-detail.component';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
 import { ServicedetailComponent } from './servicedetail/servicedetail.component';
+import { PenaltyCodeComponent } from './penalty-code/penalty-code.component';
   @NgModule({
   declarations: [
     AppComponent,
@@ -47,16 +51,19 @@ import { ServicedetailComponent } from './servicedetail/servicedetail.component'
     LoginComponent,
     RegisterComponent,
     ContractDetailComponent,
-    ServicedetailComponent
+    ServicedetailComponent,
+    PenaltyCodeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    SocketIoModule.forRoot(config),
     AppRoutingModule
   ],
   providers: [
+    NotifyService,
     DataService,
     AuthService,
     CustomerService,

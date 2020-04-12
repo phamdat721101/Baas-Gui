@@ -17,7 +17,6 @@ import { DataService } from '../data.service';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../Service/auth.service';
 import { Customer } from '../org.namespace.pqd';
-import { Vendor } from '../org.namespace.pqd';
 import { Provider } from '../org.namespace.pqd';
 import 'rxjs/Rx';
 
@@ -25,18 +24,13 @@ import 'rxjs/Rx';
 @Injectable()
 export class LoginService {
 
-  private NAMESPACE_CUSTOMER = 'Customer';
-  private NAMESPACE_VENDOR = 'Vendor';
+  private NAMESPACE_CUSTOMER = 'Customer';  
   private NAMESPACE_PROVIDER = 'Provider';
 
-  constructor(private dataService1: DataService<Customer>,
-  private dataService2: DataService<Vendor>,
+  constructor(private dataService1: DataService<Customer>,  
   private dataService3: DataService<Provider>,
   private auth: AuthService){
-  };
-  public getVendor(id: any){
-    return this.dataService2.getSingle(this.NAMESPACE_VENDOR, id);
-  }
+  }; 
   public getCustomer(id: any){
     return this.dataService1.getSingle(this.NAMESPACE_CUSTOMER, id);
   }

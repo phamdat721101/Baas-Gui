@@ -268,16 +268,14 @@
                         <thead>
                             <tr>
                               <th>ContractId</th>                                                                   
-                              <th>Customer</th>
-                              <th>state</th>            
+                              <th>Customer</th>                                        
                               <th>Detail</th>                                                                                                                
                             </tr>
                         </thead>
                         <tbody>
                           <tr class="odd gradeX" *ngFor="let asset of allAssets">                                            
                               <td>{{asset.assetId}}</td>                                                                                        
-                              <td>{{asset.signator}}</td>
-                              <td>{{asset.state}}</td>            
+                              <td>{{asset.signator}}</td>                                         
                               <td class="center">
                                 <button (click)="getDetail(asset.assetId);" type="button" class="btn btn-update">
                                   Detail
