@@ -17,35 +17,40 @@ import { AuthService } from '../Service/auth.service';
 })
 export class ContractDetailComponent implements OnInit {
   private errorMessage;
+  private contractDetail;
   private allTransactions;
-  private id;
+  private user_id;
   private sub;
   private systemTransactions;
   private performedTransactions;
-  contractDetail : contract;
+  // contractDetail : contract;
 
   constructor( public serviceTransaction: ContractDetailService,fb: FormBuilder, 
     private _Activatedroute:ActivatedRoute, 
     private contractService: contractService, 
     public auth: AuthService,
-    private Router: Router) {
+    private Router: Router) {          
   };
 
   ngOnInit(): void {
-    this.sub=this._Activatedroute.paramMap.subscribe(params => {       
-       this.id = params.get('id');        
-       this.loadContract(this.id);             
+    this.auth.setCurrentUser(sessionStorage.getItem('auth_user'));
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {       
+       this.user_id = params.get('id');        
+       this.loadContract(this.user_id);     
+       this.user_id = sessionStorage.getItem('id');        
     });
     setInterval(() => { 
       this.loadAllTransactions();
     }, 1000);    
   }
 
-  loadContract(id): any{
+  loadContract(id): any{    
     return this.contractService.getAsset(id).toPromise()
     .then((result) => {
-      this.errorMessage = null;           
-      this.contractDetail = result;
+      this.errorMessage = null;                 
+      this.contractDetail = result;            
+      this.contractDetail.creator = this.contractDetail.creator.split("#").pop();   
+      this.contractDetail.signator = this.contractDetail.signator.split("#").pop();   
       return result; 
     })
     .catch((error) => {

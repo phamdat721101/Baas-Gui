@@ -28,11 +28,13 @@ import { VerifyDataComponent } from './VerifyData/VerifyData.component';
 import { contractComponent } from './contract/contract.component';
 import { ContractDetailComponent } from './contract-detail/contract-detail.component';
 import { ServicedetailComponent } from './servicedetail/servicedetail.component';
+import { PenaltyCodeComponent } from './penalty-code/penalty-code.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'Service/:id', component: ServicedetailComponent},
   { path: 'ContractDetail/:id', component: ContractDetailComponent },
+  { path: 'PenaltyCode', component: PenaltyCodeComponent},
   { path: 'Dashboard', component: DashboardComponent},
   { path: 'AddData', component: AddDataComponent},
   { path: 'AddContract/:id', component: contractComponent},

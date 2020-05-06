@@ -23,7 +23,7 @@ export class AuthService {
   setCurrentUser(decodedUser: string) {
     this.loggedIn = true;    
     this.isCustomer = (decodedUser === constant.ROLE_CUSTOMER);
-    this.isProvider = (decodedUser === constant.ROLE_PROVIDER);
+    this.isProvider = (decodedUser === constant.ROLE_PROVIDER);    
   }
   canActivate(){
     if(this.loggedIn == false){

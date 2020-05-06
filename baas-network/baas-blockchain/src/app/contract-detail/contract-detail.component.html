@@ -47,7 +47,7 @@
                       <a [routerLink]="['/Home']"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
                   </li>                                    
                   <li *ngIf="auth.isProvider || auth.isCustomer">                     
-                    <a [routerLink]="['/AddContract', id]"><i class="fa fa-wrench fa-fw"></i>List of contracts</a>                            
+                    <a [routerLink]="['/AddContract/' + user_id]"><i class="fa fa-wrench fa-fw"></i>List of contracts</a>                            
                   </li>
                   <li *ngIf="auth.isProvider">                     
                     <a [routerLink]="['/Service', id]"><i class="fa fa-wrench fa-fw"></i>List of services</a>                             

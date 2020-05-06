@@ -113,12 +113,15 @@ export class contractComponent implements OnInit {
       result.forEach(asset => {                               
         creatorInfo = JSON.stringify(asset.creator);        
         signatorInfo = JSON.stringify(asset.signator);
-        if(creatorInfo.indexOf(id) != -1 || signatorInfo.indexOf(id) != -1){
+        if(creatorInfo.indexOf(id) != -1 || signatorInfo.indexOf(id) != -1){                    
           tempList.push(asset);
         }        
-      });
-      console.log(tempList);
-      this.allAssets = tempList;
+      });      
+      this.allAssets = tempList;  
+      this.allAssets.forEach(item => {
+        item.creator = item.creator.split("#").pop();
+        item.signator = item.signator.split("#").pop();
+      })    
     })
     .catch((error) => {
       if (error === 'Server error') {

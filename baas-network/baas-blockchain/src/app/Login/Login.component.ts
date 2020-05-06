@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
   decodeUserFromToken(token:any) {
     return this.jwtHelper.decodeToken(token);
   }
-  Login(): Promise<any>{
+  Login(): Promise<any>{    
     if(this.role.value == 'Vendor'){
       if(this.id.value == "ven1"
         && this.password.value == "721101"){
@@ -81,13 +81,13 @@ export class LoginComponent implements OnInit {
         return this.serviceLogin.getCustomer(this.id.value).toPromise()
       .then((result) =>{
         if(this.id.value == result.cuId
-          && this.password.value == result.password){
-          console.log('Success to login');
+          && this.password.value == result.password){          
           this.auth.setCurrentUser('Customer');
           sessionStorage.setItem('id', result.cuId);
+          sessionStorage.setItem('auth_user', 'Customer');
           this.router.navigate(['/Home']);
         }
-        else{
+        else{          
           alert('Fail to login');
           this.router.navigate(['/Login']);
         }
@@ -98,16 +98,18 @@ export class LoginComponent implements OnInit {
           this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
           this.errorMessage = error;
         }
+        alert('Fail to login');
+        this.router.navigate(['/Login']);
       });
     }
     if(this.role.value == 'Provider'){
         return this.serviceLogin.getProvider(this.id.value).toPromise()
       .then((result) =>{
         if(this.id.value == result.proId
-          && this.password.value == result.password){
-          console.log('Success to login');
+          && this.password.value == result.password){          
           this.auth.setCurrentUser('Provider');
           sessionStorage.setItem('id', result.proId);
+          sessionStorage.setItem('auth_user', 'Provider');
           this.router.navigate(['/Home']);
         }
         else{
@@ -121,7 +123,12 @@ export class LoginComponent implements OnInit {
           this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
           this.errorMessage = error;
         }
+        alert('Fail to login');
+        this.router.navigate(['/Login']);
       });
+    }else{
+      alert('Fail to login');
+      this.router.navigate(['/Login']);
     }
   }
 

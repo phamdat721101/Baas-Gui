@@ -31,8 +31,10 @@ export class DashboardComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void{
-    this.id = sessionStorage.getItem('id');
+  ngOnInit(): void{    
+    console.log("This is session: ", sessionStorage.getItem('id'));
+    this.id = sessionStorage.getItem('id');        
+    this.auth.setCurrentUser(sessionStorage.getItem('auth_user'));
   }
 
 }

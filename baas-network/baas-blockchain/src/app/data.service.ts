@@ -31,44 +31,31 @@ export class DataService<Type> {
         this.headers.append('Accept', 'application/json');
     }
 
-    public getAll(ns: string): Observable<Type[]> {
-        console.log('GetAll ' + ns + ' to ' + this.actionUrl + ns);
+    public getAll(ns: string): Observable<Type[]> {        
         return this.http.get(`${this.actionUrl}${ns}`)
           .map(this.extractData)
           .catch(this.handleError);
     }
 
     public getSingle(ns: string, id: string): Observable<Type> {
-        console.log('GetSingle ' + ns);
-
         return this.http.get(this.actionUrl + ns + '/' + id + this.resolveSuffix)
           .map(this.extractData)
           .catch(this.handleError);
     }
 
-    public add(ns: string, asset: Type): Observable<Type> {
-        console.log('Entered DataService add');
-        console.log('Add ' + ns);
-        console.log('asset', asset);
-
+    public add(ns: string, asset: Type): Observable<Type> {        
         return this.http.post(this.actionUrl + ns, asset)
           .map(this.extractData)
           .catch(this.handleError);
     }
 
-    public update(ns: string, id: string, itemToUpdate: Type): Observable<Type> {
-        console.log('Update ' + ns);
-        console.log('what is the id?', id);
-        console.log('what is the updated item?', itemToUpdate);
-        console.log('what is the updated item?', JSON.stringify(itemToUpdate));
+    public update(ns: string, id: string, itemToUpdate: Type): Observable<Type> {        
         return this.http.put(`${this.actionUrl}${ns}/${id}`, itemToUpdate)
           .map(this.extractData)
           .catch(this.handleError);
     }
 
     public delete(ns: string, id: string): Observable<Type> {
-        console.log('Delete ' + ns);
-
         return this.http.delete(this.actionUrl + ns + '/' + id)
           .map(this.extractData)
           .catch(this.handleError);
@@ -88,9 +75,7 @@ export class DataService<Type> {
     }
 
      //get all transactions from system historian
-     public transactions(): Observable<Type[]> {
-        console.log('Get transactions ');
-
+     public transactions(): Observable<Type[]> {    
         return this.http.get(this.actionUrl + 'system/historian')
         .map(this.extractData)
         .catch(this.handleError);
