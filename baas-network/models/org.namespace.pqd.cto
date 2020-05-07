@@ -27,6 +27,7 @@ concept serviceStat {
   o String serviceId
   o Integer successCount
   o Integer totalCount
+  o serviceAgreement[] listSLA
 }
 
 concept locationService {
@@ -35,26 +36,21 @@ concept locationService {
   o String address
 }
 
-concept pernaltySLARate {
-  o Integer ratePernalty
-  o Integer rateSLA
-}
-
 concept ruleDelayData {
-  o pernaltySLARate ruleFirstDelay
-  o pernaltySLARate ruleSecondDelay
+  o Integer successCount
+  o String contentAgreement
 }
 
 concept ruleQualityData {
-  o pernaltySLARate rule99 //
-  o pernaltySLARate rule95
-  o pernaltySLARate rule90
+  o Integer successCount
+  o String contentAgreement
 }
 
 concept serviceAgreement {
-  o String serviceID
   o ruleDelayData ruleDelay
-  o ruleQualityData ruleQuality
+  o ruleQualityData ruleQuality1
+  o ruleQualityData ruleQuality2
+  o ruleQualityData ruleQuality3
 }
 
 asset contract identified by assetId {
@@ -62,13 +58,11 @@ asset contract identified by assetId {
   o String serviceId
   o String[] documentHash
   --> Provider creator
-  --> Customer signator
-  o Boolean creatorSigned
-  o Boolean signatorSigned
-  o contractState state
+  --> Customer signator    
   o locationService location
   o String description
   o String dayStart   // ngay bat dau hop dong
+  o String dayEnd
   o Integer time      // thoi han hop dong tinh bang thang
   o Double price      // gia tri hd
   o Double rateSuccessContract      // ty le cam ket
@@ -83,10 +77,15 @@ abstract transaction ledgerTransaction {
 transaction updateVoting {
   --> contract Contract
   o Boolean isSuccessData
+  o String typeEvaludation
 }
+
 transaction signContract extends ledgerTransaction {
   o String dataHash
   
+}
+
+transaction completeSignOff extends ledgerTransaction {
 }
 
 participant Provider identified by proId{
@@ -97,7 +96,6 @@ participant Provider identified by proId{
   o Integer allSendDataCount
   o Double ratingProvider  
   o serviceStat[] listServiceStat
-  o serviceAgreement[] ruleSLAService
 }
 
 transaction updateServiceStat {
