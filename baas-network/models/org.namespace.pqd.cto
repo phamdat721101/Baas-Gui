@@ -35,6 +35,28 @@ concept locationService {
   o String address
 }
 
+concept pernaltySLARate {
+  o Integer ratePernalty
+  o Integer rateSLA
+}
+
+concept ruleDelayData {
+  o pernaltySLARate ruleFirstDelay
+  o pernaltySLARate ruleSecondDelay
+}
+
+concept ruleQualityData {
+  o pernaltySLARate rule99 //
+  o pernaltySLARate rule95
+  o pernaltySLARate rule90
+}
+
+concept serviceAgreement {
+  o String serviceID
+  o ruleDelayData ruleDelay
+  o ruleQualityData ruleQuality
+}
+
 asset contract identified by assetId {
   o String assetId
   o String serviceId
@@ -67,18 +89,15 @@ transaction signContract extends ledgerTransaction {
   
 }
 
-transaction completeSignOff extends ledgerTransaction {
-}
-
 participant Provider identified by proId{
   o String proId
   o String username
   o String password
   o Integer successDataCount
   o Integer allSendDataCount
-  o Double ratingProvider
-  o String signature
+  o Double ratingProvider  
   o serviceStat[] listServiceStat
+  o serviceAgreement[] ruleSLAService
 }
 
 transaction updateServiceStat {
@@ -87,9 +106,12 @@ transaction updateServiceStat {
   o Boolean isSuccessData
 }
 
+transaction pernaltySLA {
+  --> Provider provider
+  --> contract Contract
+}
 participant Customer identified by cuId{
   o String cuId
   o String username
-  o String password
-  o String signature
+  o String password  
 }

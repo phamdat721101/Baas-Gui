@@ -26,59 +26,32 @@
 async function signContract(sign){
     const me = getCurrentParticipant();
     const theContract = sign.Contract;
-    if(!me){
-        throw new Error('The participant does not exist');
-    }
-    if(theContract.state != 'WAITING_SIGNATURES'){
-        console.log('It cannot be signed')
-    }else{
-        if(sign.Contract.creator.getIdentifier() == me.getIdentifier()){
-            if(theContract.creatorSigned){
-                console.log('It was already be signed')
-            }else{
-                theContract.creatorSigned = true;
-            }
-        }else if(theContract.signator.getIdentifier() == me.getIdentifier()){
-            if(theContract.signatorSigned){
-                console.log('It was already be signed')
-            }else{
-                theContract.signatorSigned = true;
-            }
-        }
-    }
-    if(theContract.creatorSigned == true && theContract.signatorSigned == true){
-        theContract.state = 'COMPLETE';
-    }
+    // if(!me){
+    //     throw new Error('The participant does not exist');
+    // }
+    // if(theContract.state != 'WAITING_SIGNATURES'){
+    //     console.log('It cannot be signed')
+    // }else{
+    //     if(sign.Contract.creator.getIdentifier() == me.getIdentifier()){
+    //         if(theContract.creatorSigned){
+    //             console.log('It was already be signed')
+    //         }else{
+    //             theContract.creatorSigned = true;
+    //         }
+    //     }else if(theContract.signator.getIdentifier() == me.getIdentifier()){
+    //         if(theContract.signatorSigned){
+    //             console.log('It was already be signed')
+    //         }else{
+    //             theContract.signatorSigned = true;
+    //         }
+    //     }
+    // }
+    // if(theContract.creatorSigned == true && theContract.signatorSigned == true){
+    //     theContract.state = 'COMPLETE';
+    // }
   	theContract.documentHash.push(sign.transactionId);
     const contractRegistry = await getAssetRegistry('org.namespace.pqd.contract');
     await  contractRegistry.update(theContract);
-}
-/**
- * A member signs a contract
- * @param {org.namespace.pqd.completeSignOff} sign - the signature to be processed
- * @transaction
- */
-async function completeSignOff(complete){
-    const me = getCurrentParticipant();
-    const theContract = complete.Contract;
-    if(!me){
-        throw new Error('The participant does not exist')
-    }
-    if(theContract.state != 'WAITING_SIGNATURES'){
-        console.log('It cannot be signed')
-    }else{
-        if(theContract.creator.getIdentifier() == me.getIdentifier()){
-            if(theContract.creatorSigned && theContract.signatorSigned){
-                theContract.state = 'COMPLETE';
-            }else{
-                console.log('Signoff cannot be completed');
-            }
-        }else{
-            console.log('Signoff cannot be completed')
-        }
-    }
-    const contractRegistry = await getAssetRegistry('org.namespace.pqd.contract');
-    await contractRegistry.update(theContract);
 }
 
 /**
@@ -161,5 +134,30 @@ async function updateServiceStat(tx) {
             await providerRegistry.update(provider);
         }
 
+    }
+}
+
+/**
+ * Sample transaction
+ * @param {org.namespace.pqd.pernaltySLA} pernalty
+ * @transaction
+ */
+async function pernaltySLA(tx) {
+	const assetRegistry = await getAssetRegistry('org.namespace.pqd.contract');
+    const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
+ 	const provider = await providerRegistry.get(tx.Contract.creator.getIdentifier());
+	
+  	for(index = 0; index < provider.ruleSLAService.length; index++) {
+      	if(tx.Contract.serviceId  === provider.ruleSLAService[index].serviceID) {
+          if(tx.contract.rateSuccess < provider.ruleSLAService[index].ruleQuality.rule99 && tx.contract.rateSuccess >= provider.ruleSLAService[index].ruleQuality.rule95) {
+            
+          }
+          if(tx.contract.rateSuccess < provider.ruleSLAService[index].ruleQuality.rule95 && tx.contract.rateSuccess >= provider.ruleSLAService[index].ruleQuality.rule90) {
+            
+          }
+          if(tx.contract.rateSuccess < provider.ruleSLAService[index].ruleQuality.rule90) {
+            
+          }
+        }
     }
 }
