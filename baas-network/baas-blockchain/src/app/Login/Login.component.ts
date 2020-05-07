@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
     if(this.role.value == 'Customer'){
         return this.serviceLogin.getCustomer(this.id.value).toPromise()
       .then((result) =>{
-        if(this.id.value == result.cuId
+        if(this.id.value == result.username
           && this.password.value == result.password){          
           this.auth.setCurrentUser('Customer');
           sessionStorage.setItem('id', result.cuId);
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
     if(this.role.value == 'Provider'){
         return this.serviceLogin.getProvider(this.id.value).toPromise()
       .then((result) =>{
-        if(this.id.value == result.proId
+        if(this.id.value == result.username
           && this.password.value == result.password){          
           this.auth.setCurrentUser('Provider');
           sessionStorage.setItem('id', result.proId);
