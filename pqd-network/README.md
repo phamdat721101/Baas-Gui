@@ -1,3 +1,0 @@
-# pqd-network
-
-pqd
