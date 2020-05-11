@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
       //   }
       // });
     }
-    if(this.role.value == 'Customer'){
+    else if(this.role.value == 'Customer'){
         return this.serviceLogin.getCustomer(this.id.value).toPromise()
       .then((result) =>{
         if(this.id.value == result.cuId
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/Login']);
       });
     }
-    if(this.role.value == 'Provider'){
+    else if(this.role.value == 'Provider'){
         return this.serviceLogin.getProvider(this.id.value).toPromise()
       .then((result) =>{
         if(this.id.value == result.proId
