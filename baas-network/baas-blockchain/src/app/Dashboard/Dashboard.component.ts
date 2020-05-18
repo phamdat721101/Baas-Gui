@@ -15,6 +15,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../Service/auth.service';
 import { Router } from '@angular/router';
+import { contractService } from '../contract/contract.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './Dashboard.component.html',
@@ -25,16 +26,57 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   private id;
+  public errorMessage;
+  public allAssets;
+  public notify_message;
   constructor (
     public auth: AuthService,
-    private Router: Router
+    private Router: Router,
+    public contractService: contractService
   ) {
   }
 
   ngOnInit(): void{    
-    console.log("This is session: ", sessionStorage.getItem('id'));
+    //console.log("This is session: ", sessionStorage.getItem('id'));
     this.id = sessionStorage.getItem('id');        
     this.auth.setCurrentUser(sessionStorage.getItem('auth_user'));
+    setInterval(() => {       
+      this.loadAll(this.id);       
+    }, 1000);
   }
 
+  /*-Start to load All SLA contract-*/
+  loadAll(id): Promise<any> {
+    const tempList = [];
+    const notifyList = [];
+    let creatorInfo;
+    let signatorInfo;
+    return this.contractService.getAll()
+    .toPromise()
+    .then((result) => {
+      this.errorMessage = null;
+      result.forEach(asset => {                               
+        creatorInfo = JSON.stringify(asset.creator);        
+        signatorInfo = JSON.stringify(asset.signator); 
+        if(asset.timeState == "PenaltyRule"){
+          notifyList.push("Data of " + asset.assetId + " was not been sent after 15 minutes");
+        }
+        if(creatorInfo.indexOf(id) != -1 || signatorInfo.indexOf(id) != -1){
+          tempList.push(asset);
+        }        
+      }); 
+      this.notify_message = notifyList;
+      console.log("Length of notify ", this.notify_message.length);
+      this.allAssets = tempList;
+    })
+    .catch((error) => {
+      if (error === 'Server error') {
+        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+      } else if (error === '404 - Not Found') {
+        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+      } else {
+        this.errorMessage = error;
+      }
+    });
+  }
 }
