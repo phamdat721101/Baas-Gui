@@ -20,6 +20,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { DataService } from './data.service';
 import { AuthService } from './Service/auth.service';
 import { NotifyService } from './Service/notify.service';
+import { ServiceDetailService } from './servicedetail/servicedetail.service';
+import { penaltyCodeService } from './penalty-code/penalty-code.service';
 import { CustomerService } from './Customer/Customer.service';
 import { ProviderService } from './Provider/Provider.service';
 import { AppComponent } from './app.component';
@@ -64,6 +66,8 @@ import { PenaltyCodeComponent } from './penalty-code/penalty-code.component';
   ],
   providers: [
     NotifyService,
+    ServiceDetailService,
+    penaltyCodeService,
     DataService,
     AuthService,
     CustomerService,

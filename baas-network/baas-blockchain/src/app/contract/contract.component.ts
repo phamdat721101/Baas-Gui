@@ -93,8 +93,7 @@ export class contractComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub=this._Activatedroute.paramMap.subscribe(params => {       
-      this.id = params.get('id'); 
-      console.log(this.id);
+      this.id = params.get('id');       
       this.loadAll(this.id);             
     });    
     setInterval(() => { 

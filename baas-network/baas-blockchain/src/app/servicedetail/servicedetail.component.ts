@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderService } from '../Provider/Provider.service';
+import { ServiceDetailService } from './servicedetail.service';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../Service/auth.service';
 import { Provider } from '../org.namespace.pqd';
 
 @Component({
@@ -10,7 +13,7 @@ import { Provider } from '../org.namespace.pqd';
   '../vendor_block/datatables-responsive/dataTables.responsive.css',
 '../dist/css/sb-admin-2.css',
 '../vendor_block/font-awesome/css/font-awesome.min.css','./servicedetail.component.css'],
-  providers: [ProviderService]
+  providers: [ServiceDetailService]
 })
 export class ServicedetailComponent implements OnInit {
 
@@ -18,20 +21,24 @@ export class ServicedetailComponent implements OnInit {
   private errorMessage;
   private sub;
   private id;
-  private allAssets;
+  public allAssets;
 
-  constructor(public providerService: ProviderService, private _Activatedroute:ActivatedRoute) { }
+  constructor(public providerService: ServiceDetailService, 
+    private _Activatedroute:ActivatedRoute,
+    public auth: AuthService){ }
 
-  ngOnInit() {
-    this.sub=this._Activatedroute.paramMap.subscribe(params => {       
-      this.id = params.get('id'); 
-      setInterval(() => { 
-        this.loadProviderService(this.id);
-      }, 1000);      
-   });
+  ngOnInit(): void {
+    this.id = sessionStorage.getItem('id');     
+    this.auth.setCurrentUser(sessionStorage.getItem('auth_user'));
+    setInterval(() => { 
+      this.loadProviderService(this.id);
+    }, 1000);
+    // this.sub=this._Activatedroute.paramMap.subscribe(params => {       
+            
+    // });
   }
 
-  loadProviderService(id): any{
+  loadProviderService(id): Promise<any>{
     const tempList = [];
     return this.providerService.getparticipant(id).toPromise()
     .then((result) => {
@@ -39,8 +46,7 @@ export class ServicedetailComponent implements OnInit {
       result.listServiceStat.forEach(item => {
         tempList.push(item);
       });
-      this.allAssets = tempList;
-      return result; 
+      this.allAssets = tempList;            
     })
     .catch((error) => {
       if (error === 'Server error') {
