@@ -16,7 +16,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../Service/auth.service';
 import { contractService } from '../contract/contract.service';
 import { Router } from '@angular/router';
-import { contractService } from '../contract/contract.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './Dashboard.component.html',
