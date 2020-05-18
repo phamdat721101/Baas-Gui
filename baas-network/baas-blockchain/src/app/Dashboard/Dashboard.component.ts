@@ -22,7 +22,8 @@ import { contractService } from '../contract/contract.service';
   styleUrls: ['../vendor_block/bootstrap/css/bootstrap.min.css','../vendor_block/metisMenu/metisMenu.min.css','../vendor_block/datatables-plugins/dataTables.bootstrap.css',
   '../vendor_block/datatables-responsive/dataTables.responsive.css',
 '../dist/css/sb-admin-2.css',
-'../vendor_block/font-awesome/css/font-awesome.min.css']
+'../vendor_block/font-awesome/css/font-awesome.min.css'],
+  providers:[contractService]
 })
 export class DashboardComponent implements OnInit {
   private id;
@@ -66,7 +67,7 @@ export class DashboardComponent implements OnInit {
         }        
       }); 
       this.notify_message = notifyList;
-      console.log("Length of notify ", this.notify_message.length);
+      //console.log("Length of notify ", this.notify_message.length);
       this.allAssets = tempList;
     })
     .catch((error) => {
