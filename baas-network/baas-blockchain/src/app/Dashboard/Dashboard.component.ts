@@ -16,6 +16,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../Service/auth.service';
 import { contractService } from '../contract/contract.service';
 import { Router } from '@angular/router';
+import { contractService } from '../contract/contract.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './Dashboard.component.html',
@@ -23,23 +24,23 @@ import { Router } from '@angular/router';
   '../vendor_block/datatables-responsive/dataTables.responsive.css',
 '../dist/css/sb-admin-2.css',
 '../vendor_block/font-awesome/css/font-awesome.min.css'],
-  providers: [contractService]
+  providers:[contractService]
 })
 export class DashboardComponent implements OnInit {
   private id;
-  public notify_message;
   public errorMessage;
   public allAssets;
+  public notify_message;
   constructor (
     public auth: AuthService,
-    public contractService: contractService,
-    private Router: Router
+    private Router: Router,
+    public contractService: contractService
   ) {
   }
 
-  ngOnInit(): void{      
-    this.id = sessionStorage.getItem('id');  
-    console.log(this.id);
+  ngOnInit(): void{    
+    //console.log("This is session: ", sessionStorage.getItem('id'));
+    this.id = sessionStorage.getItem('id');        
     this.auth.setCurrentUser(sessionStorage.getItem('auth_user'));
     setInterval(() => {       
       this.loadAll(this.id);       
@@ -66,7 +67,8 @@ export class DashboardComponent implements OnInit {
           tempList.push(asset);
         }        
       }); 
-      this.notify_message = notifyList;      
+      this.notify_message = notifyList;
+      //console.log("Length of notify ", this.notify_message.length);
       this.allAssets = tempList;
     })
     .catch((error) => {
@@ -79,5 +81,4 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-
 }

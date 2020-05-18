@@ -66,7 +66,8 @@ export class HomeComponent implements OnInit{
           tempList.push(asset);
         }        
       }); 
-      this.notify_message = notifyList;      
+      this.notify_message = notifyList;
+      //console.log("Length of notify ", this.notify_message.length);
       this.allAssets = tempList;
     })
     .catch((error) => {

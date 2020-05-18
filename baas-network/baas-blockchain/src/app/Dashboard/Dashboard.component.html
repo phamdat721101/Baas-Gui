@@ -13,38 +13,36 @@
       </div>
       <!-- /.navbar-header -->
 
-      <ul class="nav navbar-top-links navbar-right">      
-            <li class="dropdown" >
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+      <ul class="nav navbar-top-links navbar-right"> 
+        <li class="dropdown" >
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-messages" >
+               <li *ngFor="let message of notify_message">
+                <a [routerLink]="['/PenaltyCode']">
+                    <div>
+                        <strong>PQD</strong>
+                        <span class="pull-right text-muted">
+                            <em>PQD-Notify</em>
+                        </span>
+                    </div>
+                    <div>{{message}}</div>
                 </a>
-                <ul class="dropdown-menu dropdown-messages" >
-                    <li *ngFor="let message of notify_message">
-                    <a [routerLink]="['/PenaltyCode']">
-                        <div>
-                            <strong>PQD</strong>
-                            <span class="pull-right text-muted">
-                                <em>PQD-Notify</em>
-                            </span>
-                        </div>
-                        <div>{{message}}</div>
-                    </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-messages -->
-            </li>                     
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>                    
-                    <li><a [routerLink]="['/Login']"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
+               </li>
+            </ul>
+            <!-- /.dropdown-messages -->
+        </li>  
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>                    
+                <li><a [routerLink]="['/Login']"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+            </ul>
+            <!-- /.dropdown-user -->
+        </li>
           <!-- /.dropdown -->
       </ul>
       <!-- /.navbar-top-links -->
@@ -65,22 +63,16 @@
                   </li>
                   <li>
                       <a [routerLink]="['/Home']"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
-                  </li>                  
-                  <!-- <li *ngIf="auth.isCustomer || auth.isVendor">
-                      <a [routerLink]="['/Customer']"><i class="fa fa-bar-chart-o fa-fw"></i>Customers</a>                     
-                  </li>
-                  <li *ngIf="auth.isProvider || auth.isVendor">
-                      <a [routerLink]="['/Provider']"><i class="fa fa-table fa-fw"></i>Providers</a>
-                  </li> -->
+                  </li>           
+                  <li *ngIf="auth.isProvider || auth.isCustomer">                     
+                    <a [routerLink]="['/PenaltyCode']"><i class="fa fa-wrench fa-fw"></i>List of penaltycode</a>                            
+                  </li>       
                   <li *ngIf="auth.isProvider || auth.isCustomer">                     
                     <a [routerLink]="['/AddContract', id]"><i class="fa fa-wrench fa-fw"></i>List of contracts</a>                            
                   </li>
                   <li *ngIf="auth.isProvider">                     
                     <a [routerLink]="['/Service', id]"><i class="fa fa-wrench fa-fw"></i>List of services</a>                             
-                </li>
-                  <!-- <li>
-                      <a [routerLink]="['/Dashboard']"><i class="fa fa-sitemap fa-fw"></i>Transactions</a>                                           
-                  </li>                   -->
+                  </li>
               </ul>
           </div>
           <!-- /.sidebar-collapse -->
