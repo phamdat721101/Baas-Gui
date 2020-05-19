@@ -61,15 +61,15 @@ export class DashboardComponent implements OnInit {
         signatorInfo = JSON.stringify(asset.signator); 
         if(asset.timeState == "PenaltyRule"){
           notifyList.push("Data of " + asset.assetId + " was not been sent after 15 minutes");
-        }
-        if(JSON.stringify(asset.state) == "COMPLETE_PAYMENT"){
+        }              
+        if(JSON.stringify(asset.state).includes("COMPLETE_PAYMENT")){          
           notifyList.push("The contract " + asset.assetId + " was already paid");
         }
         if(creatorInfo.indexOf(id) != -1 || signatorInfo.indexOf(id) != -1){
           tempList.push(asset);
         }        
       }); 
-      this.notify_message = notifyList;
+      this.notify_message = notifyList;      
       this.allAssets = tempList;
     })
     .catch((error) => {
