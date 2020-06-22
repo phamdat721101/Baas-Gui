@@ -30,7 +30,6 @@ export class ContractDetailService {
 
     //get all transactions
     public getTransactions(): Observable<Object[][]> {
-        //console.log("")
         return this.transactionService.transactions();
     }
 

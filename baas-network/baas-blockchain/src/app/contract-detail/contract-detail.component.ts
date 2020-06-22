@@ -83,8 +83,7 @@ export class ContractDetailComponent implements OnInit {
     //collect all transactions for display
     return this.serviceTransaction.getTransactions()
     .toPromise()
-    .then((result) => {
-      console.log(result);      
+    .then((result) => {  
       //sort the transactions by timestamp
       result = this.sortByKey(result, 'transactionTimestamp');    
       this.errorMessage = null;

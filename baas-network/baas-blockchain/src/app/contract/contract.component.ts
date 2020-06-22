@@ -162,10 +162,8 @@ export class contractComponent implements OnInit {
     if(event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
       reader.readAsDataURL(file);
-      console.log(file);
       let output;
       reader.onload = function(evt) {
-        console.log(evt);
         output = CryptoJS.SHA256(reader.result).toString(CryptoJS.enc.Hex);
       }
       this.someValue = btoa(output);

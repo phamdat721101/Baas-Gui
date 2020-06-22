@@ -83,106 +83,83 @@
         <!-- /.navbar-static-side -->
     </nav>
     <div id="page-wrapper">
-              <div class="row">
-                  <div class="col-lg-12">
-                      <h1 class="page-header">Dashboard</h1>
-                  </div>
-                  <!-- /.col-lg-12 -->
-              </div>
-              <!-- /.row -->
-              <div class="row">
-                  <div class="col-lg-3 col-md-6">
-                      <div class="panel panel-primary">
-                          <div class="panel-heading">
-                              <div class="row">
-                                  <div class="col-xs-3">
-                                      <i class="fa fa-comments fa-5x"></i>
-                                  </div>
-                                  <div class="col-xs-9 text-right">
-                                      <div class="huge">26</div>
-                                      <div>New Comments!</div>
-                                  </div>
-                              </div>
-                          </div>
-                          <a href="#">
-                              <div class="panel-footer">
-                                  <span class="pull-left">View Details</span>
-                                  <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                  <div class="clearfix"></div>
-                              </div>
-                          </a>
-                      </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6">
-                      <div class="panel panel-green">
-                          <div class="panel-heading">
-                              <div class="row">
-                                  <div class="col-xs-3">
-                                      <i class="fa fa-tasks fa-5x"></i>
-                                  </div>
-                                  <div class="col-xs-9 text-right">
-                                      <div class="huge">12</div>
-                                      <div>New Tasks!</div>
-                                  </div>
-                              </div>
-                          </div>
-                          <a href="#">
-                              <div class="panel-footer">
-                                  <span class="pull-left">View Details</span>
-                                  <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                  <div class="clearfix"></div>
-                              </div>
-                          </a>
-                      </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6">
-                      <div class="panel panel-yellow">
-                          <div class="panel-heading">
-                              <div class="row">
-                                  <div class="col-xs-3">
-                                      <i class="fa fa-shopping-cart fa-5x"></i>
-                                  </div>
-                                  <div class="col-xs-9 text-right">
-                                      <div class="huge">124</div>
-                                      <div>New Orders!</div>
-                                  </div>
-                              </div>
-                          </div>
-                          <a href="#">
-                              <div class="panel-footer">
-                                  <span class="pull-left">View Details</span>
-                                  <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                  <div class="clearfix"></div>
-                              </div>
-                          </a>
-                      </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6">
-                      <div class="panel panel-red">
-                          <div class="panel-heading">
-                              <div class="row">
-                                  <div class="col-xs-3">
-                                      <i class="fa fa-support fa-5x"></i>
-                                  </div>
-                                  <div class="col-xs-9 text-right">
-                                      <div class="huge">13</div>
-                                      <div>Support Tickets!</div>
-                                  </div>
-                              </div>
-                          </div>
-                          <a href="#">
-                              <div class="panel-footer">
-                                  <span class="pull-left">View Details</span>
-                                  <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                  <div class="clearfix"></div>
-                              </div>
-                          </a>
-                      </div>
-                  </div>
-              </div>
-              <!-- /.row -->             
-              <!-- /.row -->
-          </div>
-  </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Dashboard</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <canvas baseChart [data]="chartData" [labels]="chartLabels" [options]="chartOptions" [legend]="true" [chartType]="'line'"></canvas>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">                
+                    <!-- /.panel-heading -->
+                    <div class="col-sm-offset-3" style="padding-top: 5%;padding-left: 50%">
+                        <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addParticipantModal">
+                            <span style="font-size: 14px;font-family: inherit;border-right:1px solid rgba(255,255,255,0.5);">
+                                <svg class="plus-svg" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                <path fill-rule="evenodd" d="M5.5,4.5 L9.5,4.5 L10,4.5 L10,5.5 L9.5,5.5 L5.5,5.5 L5.5,9.5 L5.5,10 L4.5,10 L4.5,9.5 L4.5,5.5 L0.5,5.5 L0,5.5 L0,4.5
+                                L0.5,4.5 L4.5,4.5 L4.5,0.5 L4.5,0 L5.5,0 L5.5,0.5 L5.5,4.5 Z"/>
+                                </svg>
+                            </span>
+                        Add contract</button>
+                    </div>
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Contract</th>              
+                                    <th>Provider</th>
+                                    <th>Customer</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Price</th>
+                                    <th>Show Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd gradeX" *ngFor="let contracts of allAssets">
+                                <td>{{contracts.assetId}}</td>              
+                                <td>{{contracts.creator}}</td>
+                                <td>{{contracts.signator}}</td>
+                                <td>{{contracts.dayStart}}</td>
+                                <td>{{contracts.dayEnd}}</td>
+                                <td>{{contracts.price}}</td>
+                                <td class="center">
+                                    <button (click)="getForm(participant.cuId);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateParticipantModal">
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                        width="12.8px" height="12.8px" viewBox="0 0 30.7 30.7" style="enable-background:new 0 0 30.7 30.7;" xml:space="preserve">
+                                    <g>
+                                        <path d="M1.5,30.7c0.1,0,0.2,0,0.4,0l5.9-1.5c0.8-0.2,1.3-1,1.1-1.8c-0.2-0.8-1-1.3-1.8-1.1l-3.6,0.9l0.8-3.8
+                                        c0.2-0.8-0.4-1.6-1.2-1.8c-0.8-0.2-1.6,0.4-1.8,1.2L0,28.9c-0.1,0.5,0.1,1,0.4,1.4C0.7,30.6,1.1,30.7,1.5,30.7z"/>
+                                        <path d="M10.4,25.2c0.3,0.3,0.7,0.4,1.1,0.4c0.4,0,0.8-0.1,1.1-0.4L30.3,7.5c0.6-0.6,0.6-1.5,0-2.1l-4.9-4.9
+                                        C25.1,0.2,24.7,0,24.3,0c-0.4,0-0.8,0.2-1.1,0.4L5.5,18.2c-0.3,0.3-0.4,0.7-0.4,1.1s0.2,0.8,0.4,1.1L10.4,25.2z M24.3,3.6l2.8,2.8
+                                        L11.5,22l-2.8-2.8L24.3,3.6z"/>
+                                    </g>
+                                    </svg>
+                                    </button>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- /.table-responsive -->
+                        <div class="well">
+                            <h4>DataTables Usage Information</h4>
+                            <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>
+                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View DataTables Documentation</a>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+            <!-- /.panel -->
+            </div>
+        </div>
+    </div>
+</div>
   
   

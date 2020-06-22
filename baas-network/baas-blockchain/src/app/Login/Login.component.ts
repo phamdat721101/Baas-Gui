@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
     if(this.role.value == 'Vendor'){
       if(this.id.value == "ven1"
         && this.password.value == "721101"){
-        console.log('Success to login');
         this.auth.setCurrentUser('Vendor');
         window.location.href = "http://103.48.80.41:8080/"
       }

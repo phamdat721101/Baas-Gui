@@ -35,6 +35,7 @@ import { LoginComponent } from './Login/Login.component';
 import { RegisterComponent } from './Register/Register.component';
 import { contractComponent } from './contract/contract.component';
 import { from } from 'rxjs/observable/from';
+import { ChartsModule } from 'ng2-charts';
 import { ContractDetailComponent } from './contract-detail/contract-detail.component';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
@@ -62,7 +63,8 @@ import { PenaltyCodeComponent } from './penalty-code/penalty-code.component';
     ReactiveFormsModule,
     HttpModule,
     SocketIoModule.forRoot(config),
-    AppRoutingModule
+    AppRoutingModule,
+    ChartsModule
   ],
   providers: [
     NotifyService,
