@@ -32,22 +32,14 @@ export class HomeComponent implements OnInit{
   public errorMessage;
   public allAssets;
   public notify_message;
-  chartOptions = {
-    responsive: true
-  };
-  chartData = [
-    { data: [330, 600, 260, 700], label: 'Account A' },
-    { data: [120, 455, 100, 340], label: 'Account B' },
-    { data: [45, 67, 800, 500], label: 'Account C' }
-  ];
-  chartLabels = ['January', 'February', 'Mars', 'April'];
-
+  public doughnutChartType = 'doughnut';
+  public doughnutChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
+  public doughnutChartData = [120, 150, 180, 90];
   constructor (
     public auth: AuthService,    
     public contractService: contractService,
     private Router: Router
-  ) {        
-  }
+  ) {}
 
   ngOnInit(): void {    
     this.id = sessionStorage.getItem('id');      
