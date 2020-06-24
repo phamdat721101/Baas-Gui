@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit{
   public allAssets;
   public notify_message;
   public doughnutChartType = 'doughnut';
-  public doughnutChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
+  public doughnutChartLabels = ['Service 1', 'Service 2', 'Service 3', 'Service 4'];
   public doughnutChartData = [120, 150, 180, 90];
   constructor (
     public auth: AuthService,    
