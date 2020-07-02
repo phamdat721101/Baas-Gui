@@ -1,298 +1,460 @@
 <app-dashboard></app-dashboard>
-<div class="modal fade" id="addVotingModal" tabindex="-1" role="dialog" aria-labelledby="addTransactionModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addTransactionModalLabel">Create Transaction</h4>
-        <p class="modal-intro">Enter the required values below.</p>
-      </div>
-      <form [formGroup]="votingForm">
-        <div class="modal-body">                      
-              <div class="form-group text-left">
-                <label for="Contract">Contract</label>                
-                    <textarea formControlName="Contract_v" class="form-control" rows="3"></textarea>                
-              </div>                                  
-              <div class="form-group text-left">
-                <label for="isSuccessData">isSuccessData</label>                
-                  <input formControlName="isSuccessData" type="checkbox" class="form-control">                
-              </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button (click)="addVotingTransaction(votingForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
-        </div>
-      </form>
-    </div>
-  </div>
+<div
+	class="modal fade"
+	id="addVotingModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="addTransactionModalLabel"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="addTransactionModalLabel">
+					Create Transaction
+				</h4>
+				<p class="modal-intro">Enter the required values below.</p>
+			</div>
+			<form [formGroup]="votingForm">
+				<div class="modal-body">
+					<div class="form-group text-left">
+						<label for="Contract">Contract</label>
+						<textarea
+							formControlName="Contract_v"
+							class="form-control"
+							rows="3"
+						></textarea>
+					</div>
+					<div class="form-group text-left">
+						<label for="isSuccessData">isSuccessData</label>
+						<input
+							formControlName="isSuccessData"
+							type="checkbox"
+							class="form-control"
+						/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Cancel
+					</button>
+					<button
+						(click)="addVotingTransaction(votingForm)"
+						type="submit"
+						class="btn btn-success"
+						data-dismiss="modal"
+					>
+						Confirm
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
-<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addTransactionModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addTransactionModalLabel">Create Transaction</h4>
-        <p class="modal-intro">Enter the required values below.</p>
-      </div>
-      <form [formGroup]="signForm">
-        <div class="modal-body">
-              <div class="form-group text-left">
-                <label for="Contract">Contract</label>
-                    <textarea formControlName="Contract" class="form-control" rows="3"></textarea>                
-              </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button (click)="addTransaction(signForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
-        </div>
-      </form>
-    </div>
-  </div>
+<div
+	class="modal fade"
+	id="addTransactionModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="addTransactionModalLabel"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="addTransactionModalLabel">
+					Create Transaction
+				</h4>
+				<p class="modal-intro">Enter the required values below.</p>
+			</div>
+			<form [formGroup]="signForm">
+				<div class="modal-body">
+					<div class="form-group text-left">
+						<label for="Contract">Contract</label>
+						<textarea
+							formControlName="Contract"
+							class="form-control"
+							rows="3"
+						></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Cancel
+					</button>
+					<button
+						(click)="addTransaction(signForm)"
+						type="submit"
+						class="btn btn-success"
+						data-dismiss="modal"
+					>
+						Confirm
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
-<div class="modal fade" id="addAssetModal" tabindex="-1" role="dialog" aria-labelledby="addAssetModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addAssetModalLabel">Create asset</h4>
-          <p class="modal-intro">Enter the required values below.</p>
-      </div>
-      <form [formGroup]="myForm">
-        <div class="modal-body">
-              <div class="form-group text-left">
-                <label for="assetId">assetId</label>
-                
-                  <input formControlName="assetId" type="text" class="form-control">
-                
-              </div>
-              <div class="form-group text-left">
-                <input type="file" id="avatar" class="btn btn-default btn-file" (change)="onFileChange($event)" value="File Input">
-              </div>
-              <div class="form-group text-left">
-                <label for="documentHash">documentHash</label>
-                <input id="hashDisplay" [(ngModel)]="someValue" formControlName="documentHash" type="text" class="form-control">
-              </div>   
-              <div class="form-group text-left">
-                <label for="creator">creator</label>
-                    <textarea formControlName="creator" class="form-control" rows="3"></textarea>                
-              </div>
-              <div class="form-group text-left">
-                <label for="signator">signator</label>
-                
-                    <textarea formControlName="signator" class="form-control" rows="3"></textarea>
-                
-              </div>
-              <div class="form-group text-left">
-                <label for="creatorSigned">creatorSigned</label>
-                
-                  <input formControlName="creatorSigned" type="checkbox" class="form-control">
-                
-              </div>
-              <div class="form-group text-left">
-                <label for="signatorSigned">signatorSigned</label>
-                
-                  <input formControlName="signatorSigned" type="checkbox" class="form-control">
-                
-              </div>
-              <label for="state">state</label>
-              <div class="checkbox">            
-                  <label>
-                    <input                      
-                        formControlName="state"                      
-                      name="state"
-                      value="WAITING_SIGNATURES"
-                      type="radio"                      
-                    />
-                    WAITING_SIGNATURES
-                  </label>                
-                  <label>
-                    <input                      
-                        formControlName="state"                      
-                      name="state"
-                      value="COMPLETE"
-                      type="radio"                      
-                    />
-                    COMPLETE
-                  </label>                
-              </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
-        </div>
-      </form>
-    </div>
-  </div>
+<div
+	class="modal fade"
+	id="addAssetModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="addAssetModalLabel"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="addAssetModalLabel">Create asset</h4>
+				<p class="modal-intro">Enter the required values below.</p>
+			</div>
+			<form [formGroup]="myForm">
+				<div class="modal-body">
+					<div class="form-group text-left">
+						<label for="assetId">assetId</label>
+
+						<input formControlName="assetId" type="text" class="form-control" />
+					</div>
+					<div class="form-group text-left">
+						<input
+							type="file"
+							id="avatar"
+							class="btn btn-default btn-file"
+							(change)="onFileChange($event)"
+							value="File Input"
+						/>
+					</div>
+					<div class="form-group text-left">
+						<label for="documentHash">documentHash</label>
+						<input
+							id="hashDisplay"
+							[(ngModel)]="someValue"
+							formControlName="documentHash"
+							type="text"
+							class="form-control"
+						/>
+					</div>
+					<div class="form-group text-left">
+						<label for="creator">creator</label>
+						<textarea
+							formControlName="creator"
+							class="form-control"
+							rows="3"
+						></textarea>
+					</div>
+					<div class="form-group text-left">
+						<label for="signator">signator</label>
+
+						<textarea
+							formControlName="signator"
+							class="form-control"
+							rows="3"
+						></textarea>
+					</div>
+					<div class="form-group text-left">
+						<label for="creatorSigned">creatorSigned</label>
+
+						<input
+							formControlName="creatorSigned"
+							type="checkbox"
+							class="form-control"
+						/>
+					</div>
+					<div class="form-group text-left">
+						<label for="signatorSigned">signatorSigned</label>
+
+						<input
+							formControlName="signatorSigned"
+							type="checkbox"
+							class="form-control"
+						/>
+					</div>
+					<label for="state">state</label>
+					<div class="checkbox">
+						<label>
+							<input
+								formControlName="state"
+								name="state"
+								value="WAITING_SIGNATURES"
+								type="radio"
+							/>
+							WAITING_SIGNATURES
+						</label>
+						<label>
+							<input
+								formControlName="state"
+								name="state"
+								value="COMPLETE"
+								type="radio"
+							/>
+							COMPLETE
+						</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Cancel
+					</button>
+					<button
+						(click)="addAsset(myForm)"
+						type="submit"
+						class="btn btn-success"
+						data-dismiss="modal"
+					>
+						Confirm
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
-<div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="updateAssetModalLabel">Update Asset</h4>
-      </div>
-      <form [formGroup]="myForm">
-        <div class="modal-body">         
-            <div class="form-group text-left">
-              <label for="assetId">assetId</label>
-                <input [ngModel]="assetId" formControlName="assetId" class="form-control" disabled="disabled">                
-            </div>          
-            <!-- <div class="form-group text-left">
+<div
+	class="modal fade"
+	id="updateAssetModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="updateAssetModalLabel"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="updateAssetModalLabel">Update Asset</h4>
+			</div>
+			<form [formGroup]="myForm">
+				<div class="modal-body">
+					<div class="form-group text-left">
+						<label for="assetId">assetId</label>
+						<input
+							[ngModel]="assetId"
+							formControlName="assetId"
+							class="form-control"
+							disabled="disabled"
+						/>
+					</div>
+					<!-- <div class="form-group text-left">
               <label for="documentHash">documentHash</label>                            
                 <input [ngModel]="documentHash" formControlName="documentHash" type="text" class="form-control">              
-            </div> -->          
-            <div class="form-group text-left">
-              <label for="creator">creator</label>                                            
-                  <textarea [ngModel]="creator" formControlName="creator" class="form-control" rows="3"></textarea>
-                
-              
+            </div> -->
+					<div class="form-group text-left">
+						<label for="creator">creator</label>
+						<textarea
+							[ngModel]="creator"
+							formControlName="creator"
+							class="form-control"
+							rows="3"
+						></textarea>
+					</div>
 
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="signator">signator</label>
-              
-              
-                
-                  <textarea [ngModel]="signator" formControlName="signator" class="form-control" rows="3"></textarea>
-                
-              
+					<div class="form-group text-left">
+						<label for="signator">signator</label>
 
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="creatorSigned">creatorSigned</label>
-              
-              
-                <input [ngModel]="creatorSigned" formControlName="creatorSigned" type="checkbox" class="form-control">
-              
+						<textarea
+							[ngModel]="signator"
+							formControlName="signator"
+							class="form-control"
+							rows="3"
+						></textarea>
+					</div>
 
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="signatorSigned">signatorSigned</label>
-              
-              
-                <input [ngModel]="signatorSigned" formControlName="signatorSigned" type="checkbox" class="form-control">
-              
+					<div class="form-group text-left">
+						<label for="creatorSigned">creatorSigned</label>
 
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="state">state</label>
-              
-              
-                
-                  <div class="row">
-                    <div class="col-xs-12 checkbox">
-                    
-                      <label>
-                        <input
-                          
-                            formControlName="state"
-                            [ngModel]="state"
-                          
-                          name="state"
-                          value="WAITING_SIGNATURES"
-                          type="radio"
-                          
-                        />
-                        WAITING_SIGNATURES
-                      </label>
-                    
-                      <label>
-                        <input
-                          
-                            formControlName="state"
-                            [ngModel]="state"
-                          
-                          name="state"
-                          value="COMPLETE"
-                          type="radio"
-                          
-                        />
-                        COMPLETE
-                      </label>
-                    
-                    </div>
-                  </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button (click)="updateAsset(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
+						<input
+							[ngModel]="creatorSigned"
+							formControlName="creatorSigned"
+							type="checkbox"
+							class="form-control"
+						/>
+					</div>
+
+					<div class="form-group text-left">
+						<label for="signatorSigned">signatorSigned</label>
+
+						<input
+							[ngModel]="signatorSigned"
+							formControlName="signatorSigned"
+							type="checkbox"
+							class="form-control"
+						/>
+					</div>
+
+					<div class="form-group text-left">
+						<label for="state">state</label>
+
+						<div class="row">
+							<div class="col-xs-12 checkbox">
+								<label>
+									<input
+										formControlName="state"
+										[ngModel]="state"
+										name="state"
+										value="WAITING_SIGNATURES"
+										type="radio"
+									/>
+									WAITING_SIGNATURES
+								</label>
+
+								<label>
+									<input
+										formControlName="state"
+										[ngModel]="state"
+										name="state"
+										value="COMPLETE"
+										type="radio"
+									/>
+									COMPLETE
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close
+					</button>
+					<button
+						(click)="updateAsset(myForm)"
+						type="submit"
+						class="btn btn-success"
+						data-dismiss="modal"
+					>
+						Submit
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
-
-
-<div class="modal fade" id="deleteAssetModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssetModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deleteAssetModalLabel">Delete Asset</h4>
-      </div>
-      <form [formGroup]="myForm">
-        <div class="modal-body">
-          Are you sure you want to delete this asset?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-          <button (click)="deleteAsset()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
-        </div>
-      </form>
-    </div>
-  </div>
+<div
+	class="modal fade"
+	id="deleteAssetModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="deleteAssetModalLabel"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="deleteAssetModalLabel">Delete Asset</h4>
+			</div>
+			<form [formGroup]="myForm">
+				<div class="modal-body">
+					Are you sure you want to delete this asset?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						No
+					</button>
+					<button
+						(click)="deleteAsset()"
+						type="submit"
+						class="btn btn-danger"
+						data-dismiss="modal"
+					>
+						Yes
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
-
 
 <div id="wrapper">
-  <div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Contract</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <!-- /.row -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">                
-                <!-- /.panel-heading -->                
-                <div class="panel-body">
-                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                        <thead>
-                            <tr>
-                              <th>ContractId</th>                                                                   
-                              <th>Customer</th>   
-                              <th>Provider</th>                                      
-                              <th>Detail</th>                                                                                                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                          <tr class="odd gradeX" *ngFor="let asset of allAssets">                                            
-                              <td>{{asset.assetId}}</td>                                                                                        
-                              <td>{{asset.signator}}</td>   
-                              <td>{{asset.creator}}</td>                                      
-                              <td class="center">
-                                <button (click)="getDetail(asset.assetId);" type="button" class="btn btn-update">
-                                  Detail
-                                </button>
-                              </td>                                                                                    
-                          </tr>
-                        </tbody>
-                    </table>
-                    <!-- /.table-responsive -->
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-  </div>
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Contract</h1>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<!-- /.panel-heading -->
+					<div class="panel-body">
+						<table
+							width="100%"
+							class="table table-striped table-bordered table-hover"
+							id="dataTables-example"
+						>
+							<thead>
+								<tr>
+									<th>ContractId</th>
+									<th>Customer</th>
+									<th>Provider</th>
+									<th>Price</th>
+									<th>Start from</th>
+									<th>Expire at</th>
+									<th>Detail</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="odd gradeX" *ngFor="let asset of allAssets">
+									<td>{{ asset.assetId }}</td>
+									<td>{{ asset.signator }}</td>
+									<td>{{ asset.creator }}</td>
+									<td>{{ asset.price }}</td>
+									<td>{{ asset.dayStart }}</td>
+									<td>{{ asset.dayEnd }}</td>
+									<td class="center">
+										<button
+											(click)="getDetail(asset.assetId)"
+											type="button"
+											class="btn btn-update"
+										>
+											Detail
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- /.table-responsive -->
+					</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+	</div>
 </div>

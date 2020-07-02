@@ -1,160 +1,192 @@
 <div id="wrapper">
-  <!-- Navigation -->
-  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-      <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" [routerLink]="['/Home']">Baas-Blockchain</a>
-      </div>
-      <!-- /.navbar-header -->
+	<!-- Navigation -->
+	<nav
+		class="navbar navbar-default navbar-static-top"
+		role="navigation"
+		style="margin-bottom: 0;"
+	>
+		<div class="navbar-header">
+			<button
+				type="button"
+				class="navbar-toggle"
+				data-toggle="collapse"
+				data-target=".navbar-collapse"
+			>
+				<span class="sr-only"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" [routerLink]="['/Home']">Baas-Blockchain</a>
+		</div>
+		<!-- /.navbar-header -->
 
-      <ul class="nav navbar-top-links navbar-right">                           
-          <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                  <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-user">
-                  <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                  </li>                    
-                  <li><a [routerLink]="['/Login']"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                  </li>
-              </ul>
-              <!-- /.dropdown-user -->
-          </li>
-          <!-- /.dropdown -->
-      </ul>
-      <!-- /.navbar-top-links -->
+		<ul class="nav navbar-top-links navbar-right">
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+				</a>
+				<ul class="dropdown-menu dropdown-user">
+					<li>
+						<a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+					</li>
+					<li>
+						<a [routerLink]="['/Login']"
+							><i class="fa fa-sign-out fa-fw"></i> Logout</a
+						>
+					</li>
+				</ul>
+				<!-- /.dropdown-user -->
+			</li>
+			<!-- /.dropdown -->
+		</ul>
+		<!-- /.navbar-top-links -->
 
-      <div class="navbar-default sidebar" role="navigation">
-          <div class="sidebar-nav navbar-collapse">
-              <ul class="nav" id="side-menu">
-                  <li class="sidebar-search">
-                      <div class="input-group custom-search-form">
-                          <input type="text" class="form-control" placeholder="Search...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                          </span>
-                      </div>
-                      <!-- /input-group -->
-                  </li>
-                  <li>
-                      <a [routerLink]="['/Home']"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
-                  </li>                                    
-                  <li *ngIf="auth.isProvider || auth.isCustomer">                     
-                    <a [routerLink]="['/AddContract/' + user_id]"><i class="fa fa-wrench fa-fw"></i>List of contracts</a>                            
-                  </li>
-                  <li *ngIf="auth.isProvider">                     
-                    <a [routerLink]="['/Service', id]"><i class="fa fa-wrench fa-fw"></i>List of services</a>                             
-                </li>                 
-              </ul>
-          </div>
-          <!-- /.sidebar-collapse -->
-      </div>
-      <!-- /.navbar-static-side -->
-  </nav>
-  <!-- start component contract -->
-  <div id="page-wrapper">
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-      <strong>Error:</strong> {{errorMessage}}
-    </div>
+		<div class="navbar-default sidebar" role="navigation">
+			<div class="sidebar-nav navbar-collapse">
+				<ul class="nav" id="side-menu">
+					<li class="sidebar-search">
+						<div class="input-group custom-search-form">
+							<input type="text" class="form-control" placeholder="Search..." />
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+						<!-- /input-group -->
+					</li>
+					<li>
+						<a [routerLink]="['/Home']"
+							><i class="fa fa-dashboard fa-fw"></i>Dashboard</a
+						>
+					</li>
+					<li *ngIf="auth.isProvider || auth.isCustomer">
+						<a [routerLink]="['/AddContract/' + user_id]"
+							><i class="fa fa-wrench fa-fw"></i>List of contracts</a
+						>
+					</li>
+					<li *ngIf="auth.isProvider">
+						<a [routerLink]="['/Service', id]"
+							><i class="fa fa-wrench fa-fw"></i>List of services</a
+						>
+					</li>
+				</ul>
+			</div>
+			<!-- /.sidebar-collapse -->
+		</div>
+		<!-- /.navbar-static-side -->
+	</nav>
+	<!-- start component contract -->
+	<div id="page-wrapper">
+		<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+			<strong>Error:</strong> {{ errorMessage }}
+		</div>
 
-    <div class="row">
-        <div class="col-lg-12">
-          <h2 class="page-header">Detail of contract # {{contractDetail.assetId}}</h2>
-        </div>
-    </div>  
+		<div class="row">
+			<div class="col-lg-12">
+				<h2 class="page-header">
+					Detail of contract # {{ contractDetail.assetId }}
+				</h2>
+			</div>
+		</div>
 
-    <div *ngIf="performedTransactions.length == 0 && systemTransactions.length == 0" class="row">
-      <h4>No transactions</h4>
-    </div>
-    <div class="row"> 
-      <div class="col-sm-6">
-        <h4>Contract: {{contractDetail.assetId}}</h4>
-      </div>    
-      <div class="col-sm-6">
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-      </div>
-    </div>
-    <div class="row"> 
-      <div class="col-sm-6">
-        <h4>Provider: {{contractDetail.creator}}</h4>  
-      </div>  
-      <div class="col-sm-3">
-        <h4>Satisfaction: {{contractDetail.rateSuccess}}</h4>
-      </div>
-      <div class="col-sm-3">
-        <h4>Reliability: {{contractDetail.rateSuccessContract}}</h4>
-      </div>
-    </div>
-    <div class="row"> 
-      <div class="col-sm-6">
-        <h4>Customer: {{contractDetail.signator}}</h4>
-      </div>    
-    </div>
+		<div
+			*ngIf="
+				performedTransactions.length == 0 && systemTransactions.length == 0
+			"
+			class="row"
+		>
+			<h4>No transactions</h4>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<h4>Contract: {{ contractDetail.assetId }}</h4>
+			</div>
+			<div class="col-sm-6">
+				<div class="progress">
+					<div
+						class="progress-bar"
+						role="progressbar"
+						style="width: 25%;"
+						aria-valuenow="25"
+						aria-valuemin="0"
+						aria-valuemax="100"
+					></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<h4>Provider: {{ contractDetail.creator }}</h4>
+			</div>
+			<div class="col-sm-3">
+				<h4>Satisfaction: {{ contractDetail.rateSuccess }}</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<h4>Customer: {{ contractDetail.signator }}</h4>
+			</div>
+		</div>
 
-    <div *ngIf="performedTransactions.length > 0" class="row" >
-      <h4>Performed Transactions</h4>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>
-              Transaction Type
-            </th>
-            <th>
-              Transaction ID
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let transaction of performedTransactions">
-            <td>
-              {{transaction.transactionType}}
-            </td>
-            <td>
-              {{transaction.transactionId}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row">
-      <br>
-      <br>
-    </div>
-    <div *ngIf="systemTransactions.length > 0" class="row">
-      <h4>System Transactions</h4>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>
-              Transaction Type
-            </th>
-            <th>
-              Transaction ID
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let transaction of systemTransactions">
-            <td>
-              {{transaction.transactionType}}
-            </td>
-            <td>
-              {{transaction.transactionId}}
-            </td>
-          </tr>
-        </tbody>
-      </table>    
-    </div>  
-  </div>
-  <!-- end contract component -->
+		<div *ngIf="performedTransactions.length > 0" class="row">
+			<h4>Performed Transactions</h4>
+			<table
+				class="table table-striped"
+				style="overflow: auto; height: 50px; position: relative;"
+			>
+				<thead>
+					<tr>
+						<th>
+							Transaction Type
+						</th>
+						<th>
+							Transaction ID
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let transaction of performedTransactions">
+						<td>
+							{{ transaction.transactionType }}
+						</td>
+						<td>
+							{{ transaction.transactionId }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<br />
+			<br />
+		</div>
+		<div *ngIf="systemTransactions.length > 0" class="row">
+			<h4>System Transactions</h4>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>
+							Transaction Type
+						</th>
+						<th>
+							Transaction ID
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let transaction of systemTransactions">
+						<td>
+							{{ transaction.transactionType }}
+						</td>
+						<td>
+							{{ transaction.transactionId }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- end contract component -->
 </div>
-
