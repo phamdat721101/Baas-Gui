@@ -1,91 +1,10 @@
-/*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * Write your model definitions here
- */
-
 namespace org.namespace.pqd
 
-enum contractState{
-  o WAITING_SIGNATURES
-  o COMPLETE
-}
-
-concept serviceStat {
-  o String serviceId
-  o Integer successCount
-  o Integer totalCount
-  o serviceAgreement[] listSLA
-}
-
-concept locationService {
-  o String province
-  o String district
-  o String address
-}
-
-concept ruleDelayData {
-  o Integer successCount
-  o String contentAgreement
-}
-
-concept ruleQualityData {
-  o Integer successCount
-  o String contentAgreement
-}
-
-concept serviceAgreement {
-  o ruleDelayData ruleDelay
-  o ruleQualityData ruleQuality1
-  o ruleQualityData ruleQuality2
-  o ruleQualityData ruleQuality3
-}
-
-asset contract identified by assetId {
-  o String assetId
-  o String serviceId
-  o String[] documentHash
-  --> Provider creator
-  --> Customer signator    
-  o locationService location
-  o String description
-  o String dayStart   // ngay bat dau hop dong
-  o String dayEnd
-  o Integer time      // thoi han hop dong tinh bang thang
-  o Double price      // gia tri hd
-  o Double rateSuccessContract      // ty le cam ket
-  o Double rateSuccess
-  o Integer N       // so lan lay du lieu
-  o Integer M       // so lan lay thanh cong
-}
-
-abstract transaction ledgerTransaction {
-  --> contract Contract
-}
-transaction updateVoting {
-  --> contract Contract
-  o Boolean isSuccessData
-  o String typeEvaludation
-}
-
-transaction signContract extends ledgerTransaction {
-  o String dataHash
-  
-}
-
-transaction completeSignOff extends ledgerTransaction {
+/*--Participant definition--*/
+participant Customer identified by cuId{
+  o String cuId
+  o String username
+  o String password
 }
 
 participant Provider identified by proId{
@@ -94,22 +13,122 @@ participant Provider identified by proId{
   o String password
   o Integer successDataCount
   o Integer allSendDataCount
-  o Double ratingProvider  
+  o Double ratingProvider
   o serviceStat[] listServiceStat
 }
 
+/*--Service definition--*/
+concept serviceStat {
+  o String serviceId
+  o Integer successCountLv1
+  o Integer totalCountLv1
+  o Integer satisfaction
+  o serviceAgreement[] listServiceAgreement
+}
+
+concept serviceAgreement {
+  o String agreementID
+  o String agreementContent
+  o Integer totalCountLv2
+  o Integer successCountLv2
+  o rulePenalty[] ruleList
+}
+
+concept rulePenalty {
+  o String ruleID
+  o String ruleContent
+  o Integer totalCountLv3
+  o Integer successCountLv3
+  o ruleDetail rule
+}
+
+concept ruleDetail {
+  o Integer rate     //penalty rate
+  o String trending  //up or down
+  o String unit
+}
+
+concept locationService {
+  o String province
+  o String district
+  o String address
+}
+
+/*--Contract definition--*/
+asset contract identified by assetId {
+  o String assetId
+  o String serviceId
+  o String[] documentHash
+  --> Provider creator
+  --> Customer signator
+  o locationService location
+  o String description
+  o String dayStart   // ngay bat dau hop dong
+  o String dayEnd
+  o Integer time      // thoi han hop dong tinh bang thang
+  o Double price      // gia tri hd
+  o Integer successCount
+  o Integer totalCount
+  o Double rateSuccessCommit      // ty le cam ket
+  o Double rateSuccess
+}
+
+/*--Transaction definition--*/
+abstract transaction ledgerTransaction {
+  --> contract Contract
+}
+transaction updateVoting {     
+  --> contract Contract
+  o Boolean isSuccessData
+  o String serviceId
+  o String slaId
+  o String ruleId  
+}
+
+transaction sendData extends ledgerTransaction {
+  o String dataHash
+}
+
+/*
 transaction updateServiceStat {
   --> contract Contract
   --> Provider provider
   o Boolean isSuccessData
 }
+*/
+
+transaction addService {
+  --> Provider provider
+  o String serviceId
+}
+
+transaction addAgreement {
+  --> Provider provider
+  o String serviceID
+  o String agreementID
+  o String agreementContent
+}
+
+transaction addRulePenalty {
+  --> Provider provider
+  o String serviceID
+  o String agreementID
+  o String ruleID
+  o String ruleContent
+  o ruleDetail ruleInfor
+}
+
+transaction updateRuleBiding {
+  --> Provider provider
+  o String ruleID
+  o String ruleContent
+  o Integer ratePenalty     //penalty rate
+  o String trendUpDown  //up or down
+  o String unitPenalty
+} 
 
 transaction pernaltySLA {
   --> Provider provider
   --> contract Contract
 }
-participant Customer identified by cuId{
-  o String cuId
-  o String username
-  o String password  
-}
+

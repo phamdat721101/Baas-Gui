@@ -1,57 +1,22 @@
-/*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-/**
- * Write your transction processor functions here
- */
-
 /**
  * A member signs a contract
- * @param {org.namespace.pqd.signContract} sign - the signature to be processed
+ * @param {org.namespace.pqd.sendData} sign - the signature to be processed
  * @transaction
  */
-async function signContract(sign){
+async function sendData(sign){
     const me = getCurrentParticipant();
+  	//get contract info
     const theContract = sign.Contract;
-    // if(!me){
-    //     throw new Error('The participant does not exist');
-    // }
-    // if(theContract.state != 'WAITING_SIGNATURES'){
-    //     console.log('It cannot be signed')
-    // }else{
-    //     if(sign.Contract.creator.getIdentifier() == me.getIdentifier()){
-    //         if(theContract.creatorSigned){
-    //             console.log('It was already be signed')
-    //         }else{
-    //             theContract.creatorSigned = true;
-    //         }
-    //     }else if(theContract.signator.getIdentifier() == me.getIdentifier()){
-    //         if(theContract.signatorSigned){
-    //             console.log('It was already be signed')
-    //         }else{
-    //             theContract.signatorSigned = true;
-    //         }
-    //     }
-    // }
-    // if(theContract.creatorSigned == true && theContract.signatorSigned == true){
-    //     theContract.state = 'COMPLETE';
-    // }
+    if(!me){
+        throw new Error('The participant does not exist');
+    }
   	theContract.documentHash.push(sign.transactionId);
     const contractRegistry = await getAssetRegistry('org.namespace.pqd.contract');
+  	//update info of provider
+  	//const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
+ 	//const provider = await providerRegistry.get(theContract.creator.getIdentifier());
     await  contractRegistry.update(theContract);
+  	//await providerRegistry.update(provider);
 }
 
 /**
@@ -63,18 +28,35 @@ async function updateVoting(tx) {
     try {
         const assetRegistry = await getAssetRegistry('org.namespace.pqd.contract');
         const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
-        //const me = getCurrentParticipant();
-        //const theContract = sign.Contract;
-        const provider = await providerRegistry.get(tx.Contract.creator.getIdentifier());        
-        tx.Contract.N = tx.Contract.N + 1;
+        const provider = await providerRegistry.get(tx.Contract.creator.getIdentifier());  
+      	//Update total count in sending data
+      	tx.Contract.totalCount += 1
+      	provider.allSendDataCount += 1
+      	provider.listServiceStat.forEach(sid => {
+        	sid.totalCountLv1 += 1
+          	sid.listServiceAgreement.forEach(aid => {
+            	aid.totalCountLv2 += 1
+            })
+        })
+      	//update success count in sending data
         if(tx.isSuccessData === true) {
-            tx.Contract.M = tx.Contract.M + 1;
+          	tx.Contract.successCount += 1
             provider.successDataCount = provider.successDataCount + 1;
+            provider.listServiceStat.map(sid => {              
+                if(sid.serviceId == tx.serviceId){
+                    sid.successCountLv1 += 1
+                    sid.listServiceAgreement.map(aid => {
+                        if(aid.agreementID == tx.slaId){
+                            aid.successCountLv2 += 1
+                        }
+                    })
+                }
+              })
         }
-        tx.Contract.rateSuccess = tx.Contract.M / tx.Contract.N;
-        provider.allSendDataCount = provider.allSendDataCount + 1;
-        provider.ratingProvider = provider.successDataCount / provider.allSendDataCount;
+      	//update model
+        tx.Contract.rateSuccess = tx.Contract.successCount / tx.Contract.totalCount;
         await assetRegistry.update(tx.Contract);
+        provider.ratingProvider = provider.successDataCount / provider.allSendDataCount;
         await providerRegistry.update(provider);
     } catch(exception) {
         throw new Error(exception);
@@ -87,6 +69,7 @@ async function updateVoting(tx) {
  * @param {org.namespace.pqd.updateServiceStat} update
  * @transaction
  */
+/*
 async function updateServiceStat(tx) {
 	const assetRegistry = await getAssetRegistry('org.namespace.pqd.contract');
     const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
@@ -137,27 +120,154 @@ async function updateServiceStat(tx) {
     }
 }
 
+*/
+
 /**
- * Sample transaction
- * @param {org.namespace.pqd.pernaltySLA} pernalty
+ * A member signs a contract
+ * @param {org.namespace.pqd.addService}  addService
  * @transaction
  */
-async function pernaltySLA(tx) {
-	const assetRegistry = await getAssetRegistry('org.namespace.pqd.contract');
-    const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
- 	const provider = await providerRegistry.get(tx.Contract.creator.getIdentifier());
-	
-  	for(index = 0; index < provider.ruleSLAService.length; index++) {
-      	if(tx.Contract.serviceId  === provider.ruleSLAService[index].serviceID) {
-          if(tx.contract.rateSuccess < provider.ruleSLAService[index].ruleQuality.rule99 && tx.contract.rateSuccess >= provider.ruleSLAService[index].ruleQuality.rule95) {
-            
-          }
-          if(tx.contract.rateSuccess < provider.ruleSLAService[index].ruleQuality.rule95 && tx.contract.rateSuccess >= provider.ruleSLAService[index].ruleQuality.rule90) {
-            
-          }
-          if(tx.contract.rateSuccess < provider.ruleSLAService[index].ruleQuality.rule90) {
-            
-          }
-        }
+async function addService(tx) {
+  const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
+  const provider = await providerRegistry.get(tx.provider.getIdentifier());    
+  if (provider.listServiceStat.length === 0) {
+    var factory = getFactory();
+    var newService = factory.newConcept('org.namespace.pqd', 'serviceStat');
+    newService.serviceId = tx.serviceId;
+    newService.successCountLv1 = 0;
+    newService.totalCountLv1 = 0;
+    newService.satisfaction = 0;
+    newService.listServiceAgreement = []
+    provider.listServiceStat.push(newService);
+    await providerRegistry.update(provider);
+    return;
+  }
+  for (index = 0; index < provider.listServiceStat.length; index++) {
+    if (provider.listServiceStat[index].serviceId === tx.serviceId) {
+      throw new Error('The service existed');
+      return;
     }
+    else {
+      var factory = getFactory();
+      var newService = factory.newConcept('org.namespace.pqd', 'serviceStat');
+      newService.serviceId = tx.serviceId;
+      newService.successCountLv1 = 0;
+      newService.totalCountLv1 = 0;
+      newService.satisfaction = 0;
+      newService.listServiceAgreement = []
+      provider.listServiceStat.push(newService);
+      await providerRegistry.update(provider);
+      return;
+    }
+  }
 }
+
+/**
+ * A member signs a contract
+ * @param {org.namespace.pqd.addAgreement} addAgreement
+ * @transaction
+ */
+async function addAgreement(tx) {
+  const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
+  const provider = await providerRegistry.get(tx.provider.getIdentifier());
+  if (provider.listServiceStat.length === 0) {
+    throw new Error('No service existed in this list');
+    return;
+  }
+  for (index = 0; index < provider.listServiceStat.length; index++) {
+    if (provider.listServiceStat[index].serviceId === tx.serviceID) {
+      if (provider.listServiceStat[index].listServiceAgreement.length === 0) {
+          var factory = getFactory();
+          var newAgreement = factory.newConcept('org.namespace.pqd', 'serviceAgreement');
+          newAgreement.agreementID = tx.agreementID;
+          newAgreement.successCountLv2 = 0;
+          newAgreement.totalCountLv2 = 0;
+          newAgreement.agreementContent = tx.agreementContent
+          newAgreement.ruleList = []
+          provider.listServiceStat[index].listServiceAgreement.push(newAgreement);
+          await providerRegistry.update(provider);
+          return;
+      }
+      for (i = 0; i < provider.listServiceStat[index].listServiceAgreement.length; i++) {
+        if (provider.listServiceStat[index].listServiceAgreement[i].agreementID === tx.agreementID) {
+          throw new Error('The agreement existed');
+          return;
+        }
+      }
+      var factory = getFactory();
+      var newAgreement = factory.newConcept('org.namespace.pqd', 'serviceAgreement');
+      newAgreement.agreementID = tx.agreementID;
+      newAgreement.successCountLv2 = 0;
+      newAgreement.totalCountLv2 = 0;
+      newAgreement.agreementContent = tx.agreementContent
+      newAgreement.ruleList = []
+      provider.listServiceStat[index].listServiceAgreement.push(newAgreement);
+      await providerRegistry.update(provider);
+      return;
+    }
+  }
+  throw new Error('No service matchs input serviceID');
+  return;
+}
+
+/**
+ * A member signs a contract
+ * @param {org.namespace.pqd.addRulePenalty} add rule penalty 
+ * @transaction
+ */
+
+async function addRulePenalty(tx) {
+  const providerRegistry = await getParticipantRegistry('org.namespace.pqd.Provider');
+  const provider = await providerRegistry.get(tx.provider.getIdentifier());
+  if (provider.listServiceStat.length === 0) {
+    throw new Error('No service existed in this list');
+    return;
+  }
+  for (index = 0; index < provider.listServiceStat.length; index++) {
+    if (provider.listServiceStat[index].serviceId === tx.serviceID) {
+      if (provider.listServiceStat[index].listServiceAgreement.length === 0) {
+        throw new Error('No agreement existed in this list');
+        return;
+      }
+      for (i = 0; i < provider.listServiceStat[index].listServiceAgreement.length; i++) {
+        if (provider.listServiceStat[index].listServiceAgreement[i].agreementID === tx.agreementID) {
+          if (provider.listServiceStat[index].listServiceAgreement[i].ruleList.length === 0) {
+            //if rule list current empty, add new rule to this empty list
+            var factory = getFactory();
+      		var newRule = factory.newConcept('org.namespace.pqd', 'rulePenalty');
+      		newRule.ruleID = tx.ruleID;
+            newRule.ruleContent = tx.ruleContent;
+            newRule.rule = tx.ruleInfor;
+            newRule.totalCountLv3 = 0;
+            newRule.successCountLv3 = 0;
+            provider.listServiceStat[index].listServiceAgreement[i].ruleList.push(newRule);
+      		await providerRegistry.update(provider);
+      		return;
+          }
+          for (j = 0; j < provider.listServiceStat[index].listServiceAgreement[i].ruleList.length; j++) {
+            if (provider.listServiceStat[index].listServiceAgreement[i].ruleList[j].ruleID === tx.ruleID) {
+              throw new Error('The ruleID existed');
+              return;
+            }
+          }
+          var factory = getFactory();
+          var newRule = factory.newConcept('org.namespace.pqd', 'rulePenalty');
+      	  newRule.ruleID = tx.ruleID;
+          newRule.ruleContent = tx.ruleContent;
+          newRule.rule = tx.ruleInfor;
+          newRule.totalCountLv3 = 0;
+          newRule.successCountLv3 = 0;
+          provider.listServiceStat[index].listServiceAgreement[i].ruleList.push(newRule);
+          await providerRegistry.update(provider);
+      	  return;
+        }
+        
+      }
+      throw new Error('No agreement matchs input agreementID');
+      return;
+    }
+  }
+  throw new Error('No service matchs input serviceID');
+  return;
+}
+
